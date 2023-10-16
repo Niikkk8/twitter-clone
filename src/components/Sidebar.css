@@ -1,13 +1,25 @@
+.sidebar{
+    border-right: 1px solid var(--twitter-background);
+    flex: 0.25;
+    min-width: 250px;
+    padding: 12px;
+}
+
+.sidebar_logo{
+    margin:24px 12px 12px 12px;
+    width: 50px;
+}
+
 .sidebar_tweet {
     font-size: 18px;
     font-weight: 700;
+    width: 100%;
     border: none;
     border-radius: 40px;
     padding: 12px 48px;
-    margin-top: 24px;
+    margin: 24px auto;
     color: var(--twitter-white);
     background-color: var(--twitter-color);
-
     /*ripple effect code*/
     background-position: center;
     transition: all 750ms ease;

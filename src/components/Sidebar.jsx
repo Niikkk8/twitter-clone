@@ -1,10 +1,12 @@
 import React from 'react';
 import './Sidebar.css';
-import SidebarOptions from './ui/SidebarOptions';
+import SidebarOptions from './SidebarOptions';
+import Logo from '../assets/logo.png'
 
 const Sidebar = () => {
     return (
-        <div>
+        <div className="sidebar">
+            <img src={Logo} alt="" className="sidebar_logo" />
             <SidebarOptions active text="Home" icon="home"/>
             <SidebarOptions text="Explore" icon="magnifying-glass"/>
             <SidebarOptions text="Notifications" icon="bell"/>
