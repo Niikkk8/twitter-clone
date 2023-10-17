@@ -19,7 +19,6 @@ body{
 
 .app{
     display: flex;
-    height: 100vh;
     max-width: 1300px;
-    margin: 0 auto;
+    margin: 0 auto 12px auto;
 }
