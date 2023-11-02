@@ -7,23 +7,25 @@
     transition: all 150ms ease;
 }
 
-.sidebar_options:hover{
-    background-color: #e8f5fe;
-    border-radius: 50px;
-    color: var(--twitter-color);
-}
-
 .sidebar_icon{
     font-size: 20px;
     padding: 16px;
+    color: var(--twitter-black);
 }
 
 .sidebar_text{
     font-size: 24px;
     font-weight: 700;
     margin-right: 20px;
+    color: var(--twitter-black);
 }
 
 .sidebar_options-active{
     color: var(--twitter-color);
+}
+
+.sidebar_options:hover{
+    background-color: #e8f5fe;
+    border-radius: 50px;
+    color: var(--twitter-color) !important ;
 }

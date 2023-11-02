@@ -34,3 +34,7 @@
     background-size: 100%;
     transition: all 0s;
 }
+
+.sidebar_links{
+    text-decoration: none;
+}
