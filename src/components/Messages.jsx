@@ -1,8 +1,9 @@
 import React from 'react';
+import './Messages.css';
 
 const Messages = () => {
     return (
-        <div>
+        <div className='messages'>
             <h1>This is the messages page</h1>
         </div>
     );

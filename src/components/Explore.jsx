@@ -1,9 +1,10 @@
 import React from 'react';
+import './Explore.css';
 
 const Explore = () => {
     return (
-        <div>
-            <h1>This is the search page</h1>
+        <div className='explore'>
+            <h1>This is the explore page</h1>
         </div>
     );
 }

@@ -1,8 +1,9 @@
 import React from 'react';
+import './Notifications.css';
 
 const Notifications = () => {
     return (
-        <div>
+        <div className='notifications'>
             <h1>This is the notifications page</h1>
         </div>
     );
