@@ -17,7 +17,7 @@ function App() {
           <Route index element={<Feed />} />
           <Route path='/feed' element={<Feed />} />
           <Route path='/explore' element={<Explore />} />
-          <Route path='/notifications' element={<Notifications />} />
+          <Route path='/notifications' element={<Notifications />} /> 
           <Route path='/messages' element={<Messages />} />
           <Route path='/profile' element={<Profile />} />
         </Routes>

@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Banner from '../assets/profile_banner.jpeg'
 import ProfilePicture from '../assets/demo_profile-picture.jpg'
 import Post from './Post';
+import { Link } from 'react-router-dom';
 
 const Profile = () => {
     return (
@@ -32,11 +33,11 @@ const Profile = () => {
                     <span className="followers">Followers</span>
                 </div>
                 <div className="profile_links">
-                    <a href="/" className="profile_link">Posts</a>
-                    <a href="/" className="profile_link">Replies</a>
-                    <a href="/" className="profile_link">Highlights</a>
-                    <a href="/" className="profile_link">Media</a>
-                    <a href="/" className="profile_link">Likes</a>
+                    <Link to="./posts" className='profile_link'>Posts</Link>
+                    <Link to="./replies" className='profile_link'>Replies</Link>
+                    <Link to="./highlights" className='profile_link'>Highlights</Link>
+                    <Link to="./media" className='profile_link'>Media</Link>
+                    <Link to="./likes" className='profile_link'>Likes</Link>
                 </div>
             </div>
             <Post />

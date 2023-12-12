@@ -1,6 +1,12 @@
 .widgets{
-    flex: 0.2;
-    max-height: 100vh;
+    flex: 0.25;
+    height: 100vh;
+    overflow-y: scroll;
+}
+
+
+.widgets::-webkit-scrollbar{
+    display: none;
 }
 
 .widgets_input-wrapper{

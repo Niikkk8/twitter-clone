@@ -1,10 +1,14 @@
 import React from 'react';
 import './Explore.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 const Explore = () => {
     return (
         <div className='explore'>
-            <h1>This is the explore page</h1>
+            <div className="search_wrapper">
+                <input type="text" placeholder='Search' className="explore_input" />
+                <FontAwesomeIcon icon="search"  className='search_icon'/>
+            </div>
         </div>
     );
 }

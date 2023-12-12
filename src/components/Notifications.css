@@ -1,3 +1,24 @@
 .notifications{
     flex: 0.6;
+    min-width: fit-content;
+    overflow-y: scroll;
+    border-right: 1px solid var(--twitter-background);
+}
+
+.notifications::-webkit-scrollbar{
+    display: none;
+}
+
+.notifications_header{
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 16px 20px;
+    background-color: var(--twitter-gray);
+    border: 1px solid var(--twitter-background);
+}
+
+.notifications_header-heading{
+    font-size: 20px;
+    font-weight: 800;
 }

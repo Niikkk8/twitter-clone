@@ -4,7 +4,9 @@ import './Notifications.css';
 const Notifications = () => {
     return (
         <div className='notifications'>
-            <h1>This is the notifications page</h1>
+            <div className="notifications_header">
+                <h2 className="notifications_header-heading">Notifications</h2>
+            </div>
         </div>
     );
 }
