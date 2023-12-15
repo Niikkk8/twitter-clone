@@ -1,4 +1,3 @@
-import React from 'react';
 import './Sidebar.css';
 import SidebarOptions from './SidebarOptions';
 import Logo from '../assets/logo.png';
@@ -6,7 +5,6 @@ import { Link, useLocation } from 'react-router-dom';
 
 const Sidebar = () => {
     const location = useLocation();
-
     return (
         <div className="sidebar">
             <img src={Logo} alt="" className="sidebar_logo" />
@@ -14,21 +12,22 @@ const Sidebar = () => {
                 <SidebarOptions active={location.pathname === '/'} text="Home" icon="home" />
             </Link>
             <Link to="/explore" className='sidebar_links'>
-                <SidebarOptions active={location.pathname === '/explore'} text="Explore" icon="magnifying-glass" />
+                <SidebarOptions active={location.pathname.includes('/explore')} text="Explore" icon="magnifying-glass" />
             </Link>
             <Link to="/notifications" className='sidebar_links'>
-                <SidebarOptions active={location.pathname === '/notifications'} text="Notifications" icon="bell" />
+                <SidebarOptions active={location.pathname.includes('/notifications')} text="Notifications" icon="bell" />
             </Link>
             <Link to="/messages" className='sidebar_links'>
-                <SidebarOptions active={location.pathname === '/messages'} text="Messages" icon="envelope" />
+                <SidebarOptions active={location.pathname.includes('/messages')} text="Messages" icon="envelope" />
             </Link>
             <Link to="/profile" className='sidebar_links'>
-                <SidebarOptions active={location.pathname === '/profile'} text="Profile" icon="user" />
+                <SidebarOptions active={location.pathname.includes('/profile')} text="Profile" icon="user" />
             </Link>
-            <SidebarOptions active={location.pathname.startsWith('/more')} text="More" icon="ellipsis" />
+            <SidebarOptions text="More" icon="ellipsis" />
             <button className="sidebar_tweet">Post</button>
         </div>
     );
 }
 
 export default Sidebar;
+// ${location.pathname.includes('/posts') ? 'profile_link-active' : ''

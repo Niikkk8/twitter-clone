@@ -6,13 +6,16 @@ import reportWebVitals from './reportWebVitals';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faHome, faMagnifyingGlass, faBell, faUser, faEllipsis, faEnvelope, faArrowsRotate, faArrowUpFromBracket, faArrowLeft, faStar } from '@fortawesome/free-solid-svg-icons';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
+import { BrowserRouter } from 'react-router-dom';
 
-library.add(faHome, faMagnifyingGlass, faBell, faUser, faEllipsis, faEnvelope, faArrowsRotate, faArrowUpFromBracket, faComment, faHeart, faArrowLeft, faStar );
+library.add(faHome, faMagnifyingGlass, faBell, faUser, faEllipsis, faEnvelope, faArrowsRotate, faArrowUpFromBracket, faComment, faHeart, faArrowLeft, faStar);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </React.StrictMode>
 );
 

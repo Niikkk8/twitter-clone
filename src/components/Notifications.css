@@ -14,7 +14,7 @@
     top: 0;
     z-index: 100;
     padding: 16px 20px;
-    background-color: var(--twitter-gray);
+    background-color: var(--twitter-white);
     border: 1px solid var(--twitter-background);
 }
 

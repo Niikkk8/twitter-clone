@@ -1,9 +1,27 @@
-.explore{
+.explore {
     flex: 0.6;
     border-right: 1px solid var(--twitter-extra-light-gray);
 }
 
-.search_wrapper{
+.explore::-webkit-scrollbar {
+    display: none;
+}
+
+.explore_header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 16px 20px;
+    background-color: var(--twitter-white);
+    border: 1px solid var(--twitter-background);
+}
+
+.explore_header-heading {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.search_wrapper {
     display: flex;
     justify-content: space-between;
     margin: 16px;
@@ -12,7 +30,7 @@
     border-radius: 48px;
 }
 
-.explore_input{
+.explore_input {
     background-color: transparent;
     border: none;
     outline: none;
@@ -20,6 +38,6 @@
     width: 95%;
 }
 
-.search_icon{
+.search_icon {
     color: var(--twitter-dark-gray);
 }

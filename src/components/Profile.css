@@ -37,21 +37,25 @@
 
 .header_title {
     font-size: 18px;
-    font-weight: 500;
 }
 
 .header_posts-number {
     font-size: 12px;
+    font-weight: 500;
     filter: opacity(0.75);
 }
 
 .profile_banner-image{
     width: 100%;
     aspect-ratio: 26/9;
+    max-height: 240px;
+}
+
+.absolute_postion{
+    transform: translateY(-80px);
 }
 
 .profile_information-wrapper{
-    transform: translateY(-70px);
     background-color: transparent;
 }
 
@@ -104,6 +108,7 @@
 .followers-following{
     margin-left: 16px;
     margin-top: 16px;
+    margin-bottom: 16px;
 }
 
 .followers-number,
@@ -122,25 +127,39 @@
 
 .profile_links{
     display: flex;
-    justify-content: space-around;
-    transform: translateY(30px);
+    justify-content: space-between;
     border-bottom: 1px solid var(--twitter-light-gray);
 }
 
-.profile_link{
-    position: relative;
-    padding: 16px;
-    text-decoration: none;
-    font-size: 14px;
+.profile_link-wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20%;
 }
 
-.profile_link::after{
+.profile_link{
+    color: var(--twitter-black);
+    position: relative;
+    padding: 12px;
+    width: 100%;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.profile_link:hover{
+    background-color: var(--twitter-extra-light-gray);
+}
+
+.profile_link-active::after{
     content: "";
     position: absolute;
     bottom: 0;
-    left: 14px;
+    left: 15px;
     height: 4px;
-    width: calc(100% - 28px);
+    width: calc(100% - 30px);
     border-radius: 2px;
     background-color: #1da1f2;
 }
