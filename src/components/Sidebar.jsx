@@ -7,7 +7,9 @@ const Sidebar = () => {
     const location = useLocation();
     return (
         <div className="sidebar">
-            <img src={Logo} alt="" className="sidebar_logo" />
+            <Link to="/">
+                <img src={Logo} alt="" className="sidebar_logo" />
+            </Link>
             <Link to="/" className='sidebar_links'>
                 <SidebarOptions active={location.pathname === '/'} text="Home" icon="home" />
             </Link>
@@ -23,7 +25,6 @@ const Sidebar = () => {
             <Link to="/profile" className='sidebar_links'>
                 <SidebarOptions active={location.pathname.includes('/profile')} text="Profile" icon="user" />
             </Link>
-            <SidebarOptions text="More" icon="ellipsis" />
             <button className="sidebar_tweet">Post</button>
         </div>
     );

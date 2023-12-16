@@ -1,3 +1,24 @@
-.messages{
+.messages {
     flex: 0.6;
+    min-width: fit-content;
+    overflow-y: scroll;
+    border-right: 1px solid var(--twitter-background);
+}
+
+.messages::-webkit-scrollbar {
+    display: none;
+}
+
+.messages_header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    padding: 16px 20px;
+    background-color: var(--twitter-white);
+    border: 1px solid var(--twitter-background);
+}
+
+.messages_header-title {
+    font-size: 20px;
+    font-weight: 800;
 }

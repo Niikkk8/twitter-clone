@@ -16,7 +16,11 @@ function App() {
         <Route index element={<Feed />} />
         <Route path='/feed' element={<Feed />} />
         <Route path='/explore' element={<Explore />} />
-        <Route path='/notifications' element={<Notifications />} />
+        <Route path='/notifications' element={<Notifications />} >
+          <Route path='/notifications/all' />
+          <Route path='/notifications/verified' />
+          <Route path='/notifications/mentions' />
+        </Route>
         <Route path='/messages' element={<Messages />} />
         <Route path='/profile' element={<Profile />}>
           <Route path='/profile/posts' />

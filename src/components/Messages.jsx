@@ -4,7 +4,9 @@ import './Messages.css';
 const Messages = () => {
     return (
         <div className='messages'>
-            <h1>This is the messages page</h1>
+            <div className="messages_header">
+                <h2 className="messages_header-title">Messages</h2>
+            </div>
         </div>
     );
 }

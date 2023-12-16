@@ -1,15 +1,15 @@
-.notifications{
+.notifications {
     flex: 0.6;
     min-width: fit-content;
     overflow-y: scroll;
     border-right: 1px solid var(--twitter-background);
 }
 
-.notifications::-webkit-scrollbar{
+.notifications::-webkit-scrollbar {
     display: none;
 }
 
-.notifications_header{
+.notifications_header {
     position: sticky;
     top: 0;
     z-index: 100;
@@ -18,7 +18,39 @@
     border: 1px solid var(--twitter-background);
 }
 
-.notifications_header-heading{
+.notifications_header-title {
     font-size: 20px;
     font-weight: 800;
+}
+
+.notifications_links {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--twitter-background);
+}
+
+.notifications_link {
+    position: relative;
+    color: var(--twitter-black);
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    text-decoration: none;
+}
+
+.notifications_link:hover{
+    background-color: var(--twitter-extra-light-gray);
+}
+
+.notifications_link-active::after{
+    position: absolute;
+    content: "";
+    bottom: 0;
+    height: 4px;
+    width: 40%;
+    border-radius: 2px;
+    background-color: #1da1f2;
 }
