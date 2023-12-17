@@ -1,0 +1,143 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;500;600;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;600;700;900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.login_page-wrapper{
+    margin-left: 2%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    height: 90vh;
+    width: 100%;
+}
+
+.logo-wrapper{
+    width: 40%;
+}
+
+.logo{
+    width: 60%;
+}
+
+button{
+    background-color: white;
+    font-size: 14px;
+    color: #f5f8fa;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+    padding: 8px 16px;
+    border-radius: 50px;
+    border: 1px solid transparent;
+    background-color: #1da1f2;
+}
+
+button:active{
+    background-color: transparent;
+    border: 1px solid #f5f8fa;
+    transform: translateY(2px);
+}
+
+input{
+    border: 1px solid white;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #f5f8fa;
+    width: 100%;
+    transition: all 300ms ease;
+}
+
+input:focus {
+    border-color: #1da1f2;
+    outline: none;
+}
+
+hr{
+    color: white;
+    width: 100%;
+}
+
+.user_authentication-wrapper{
+    width: 50%;
+}
+
+.user_authentication-title{
+    color: #f5f8fa;
+    letter-spacing: 3px;
+    font-size: 52px;
+    margin-bottom: 16px;
+    font-weight: 400;
+}
+
+.user_authentication-subtitle{
+    color: #f5f8fa;
+    letter-spacing: 1px;
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 16px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#error_message{
+    background-color: rgba(255, 0, 0, 0.75);
+}
+
+#successful_message{
+    background-color: rgba(0, 255, 0, 0.75);
+}
+
+.create_account-form,
+.login_form{
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+    margin-bottom: 12px;
+    margin-top: 12px;
+}
+
+.create_account-input-wrapper, 
+.login_input-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+
+}
+
+.login_difference-wrapper{
+    margin: 16px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+}
+
+.login_difference-text{
+    color: #f5f8fa;
+    margin: 0 12px;
+}
+
+.login_title{
+    color: #f5f8fa;
+    font-weight: 400;
+}
+
+.login_create-button{
+    background-color: transparent;
+    text-decoration: underline;
+    padding: 0;
+    color: #1da1f2;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.login_create-button:active{
+    transform: none;
+    border: none;
+}

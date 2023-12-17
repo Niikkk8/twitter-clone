@@ -1,5 +1,5 @@
 import React from 'react';
-import './Notifications.css';
+import '../styles/Notifications.css';
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 
 const Notifications = () => {

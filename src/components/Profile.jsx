@@ -1,5 +1,5 @@
 import React from 'react';
-import './Profile.css';
+import '../styles/Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Banner from '../assets/profile_banner.jpeg'
 import ProfilePicture from '../assets/demo_profile-picture.jpg'

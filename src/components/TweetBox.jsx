@@ -1,5 +1,5 @@
 import React from 'react';
-import './TweetBox.css';
+import '../styles/TweetBox.css';
 import Profile from '../assets/demo_profile-picture.jpg'
 
 const TweetBox = () => {

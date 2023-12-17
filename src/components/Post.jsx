@@ -1,7 +1,7 @@
 import React from 'react';
 import ProfilePicture from '../assets/demo_profile-picture.jpg';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './Post.css';
+import '../styles/Post.css';
 
 const Post = () => (
   <div className="post_wrapper">
