@@ -6,12 +6,14 @@ import Explore from './components/Explore';
 import Notifications from './components/Notifications';
 import Messages from './components/Messages';
 import Profile from './components/Profile';
+import Login from './components/Login';
 import { Routes, Route } from 'react-router-dom';
 
 function App() {
   return (
     <div className="app">
-      <Sidebar />
+      <Login />
+      {/* <Sidebar />
       <Routes>
         <Route index element={<Feed />} />
         <Route path='/feed' element={<Feed />} />
@@ -30,7 +32,7 @@ function App() {
           <Route path='/profile/likes' />
         </Route>
       </Routes>
-      <Widgets />
+      <Widgets /> */}
     </div>
   );
 }

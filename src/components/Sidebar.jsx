@@ -1,5 +1,5 @@
-import './Sidebar.css';
-import SidebarOptions from '../styles/SidebarOptions';
+import '../styles/Sidebar.css';
+import SidebarOptions from './SidebarOptions';
 import Logo from '../assets/logo.png';
 import { Link, useLocation } from 'react-router-dom';
 

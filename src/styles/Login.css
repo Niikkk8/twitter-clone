@@ -25,7 +25,6 @@
 }
 
 button{
-    background-color: white;
     font-size: 14px;
     color: #f5f8fa;
     font-weight: 400;
@@ -38,17 +37,18 @@ button{
 
 button:active{
     background-color: transparent;
-    border: 1px solid #f5f8fa;
+    border: 1px solid var(--twitter-black);
+    color: var(--twitter-black);
     transform: translateY(2px);
 }
 
 input{
-    border: 1px solid white;
+    border: 1px solid black;
     border-radius: 12px;
     padding: 12px;
     margin-bottom: 12px;
     font-size: 14px;
-    color: #f5f8fa;
+    color: var(--twitter-black);
     width: 100%;
     transition: all 300ms ease;
 }
@@ -59,7 +59,7 @@ input:focus {
 }
 
 hr{
-    color: white;
+    color: black;
     width: 100%;
 }
 
@@ -68,7 +68,7 @@ hr{
 }
 
 .user_authentication-title{
-    color: #f5f8fa;
+    color: var(--twitter-black);
     letter-spacing: 3px;
     font-size: 52px;
     margin-bottom: 16px;
@@ -76,7 +76,7 @@ hr{
 }
 
 .user_authentication-subtitle{
-    color: #f5f8fa;
+    color: var(--twitter-black);
     letter-spacing: 1px;
     font-size: 24px;
     font-weight: 500;
@@ -119,12 +119,12 @@ hr{
 }
 
 .login_difference-text{
-    color: #f5f8fa;
+    color: var(--twitter-black);
     margin: 0 12px;
 }
 
 .login_title{
-    color: #f5f8fa;
+    color: var(--twitter-black);
     font-weight: 400;
 }
 

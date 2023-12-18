@@ -3,7 +3,7 @@ import Logo from '../assets/logo.png';
 import '../styles/Login.css';
 import { auth, db } from '../firebase/Init.js'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, doc, setDoc } from 'firebase/firestore';
+import { addDoc, collection, doc, setDoc, getDoc, Firestore } from 'firebase/firestore';
 
 const Login = () => {
     const [createName, setCreateName] = useState({});
@@ -13,30 +13,40 @@ const Login = () => {
     const [loginEmail, setLoginEmail] = useState({});
     const [loginPassword, setLoginPassword] = useState({});
     const [loginInterface, setLoginInterface] = useState(false);
+    const [userNameExists, setUserNameExists] = useState(false);
 
     function showLoginInterface() {
         setLoginInterface(!loginInterface);
     }
 
+    const checkDocumentIdExists = async ({ collectionName, documentId }) => {
+        const docRef = doc(db, collectionName, documentId);
+        try {
+            const docSnap = await getDoc(docRef);
+            const exists = docSnap.exists();
+            setUserNameExists(exists);
+            console.log(exists);
+        } catch (error) {
+            console.error(`Error checking document: ${error}`);
+        }
+    };
+
     function signIn() {
-        createUserWithEmailAndPassword(auth, createEmail, createPassword)
+        checkDocumentIdExists({ collectionName: 'userData', documentId: createUserName });
+        createUserWithEmailAndPassword(auth, createEmail, createPassword, createUserName)
             .then((userCredential) => {
                 const user = userCredential.user;
                 console.log(user);
-
                 const userObj = {
                     Name: createName,
                     Email: createEmail,
                     Password: createPassword,
                     Username: createUserName,
                 };
-
                 // Generate a unique document ID based on the username
                 const documentId = createUserName; // You can use any logic to generate a unique ID
-
                 // Reference to the 'userData' collection and the generated document ID
                 const userDocRef = doc(collection(db, "userData"), documentId);
-
                 // Set the document with the provided data
                 setDoc(userDocRef, userObj)
                     .then(() => {
@@ -50,7 +60,6 @@ const Login = () => {
                 console.error(error);
             });
     }
-
 
     function logIn() {
         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
