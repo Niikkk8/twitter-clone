@@ -85,11 +85,17 @@ hr{
 }
 
 #error_message{
-    background-color: rgba(255, 0, 0, 0.75);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 2px solid rgba(255, 0, 0, 0.75);
+    background-color: rgba(255, 0, 0, 0.5);
 }
 
 #successful_message{
-    background-color: rgba(0, 255, 0, 0.75);
+    padding: 4px 12px;
+    border-radius: 50px;
+    border: 2px solid rgba(0, 255, 0, 0.75);
+    background-color: rgba(0, 255, 0, 0.5);
 }
 
 .create_account-form,

@@ -3,17 +3,18 @@ import Logo from '../assets/logo.png';
 import '../styles/Login.css';
 import { auth, db } from '../firebase/Init.js'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { addDoc, collection, doc, setDoc, getDoc, Firestore } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const Login = () => {
-    const [createName, setCreateName] = useState({});
-    const [createUserName, setCreateUserName] = useState({});
-    const [createEmail, setCreateEmail] = useState({});
-    const [createPassword, setCreatePassword] = useState({});
-    const [loginEmail, setLoginEmail] = useState({});
-    const [loginPassword, setLoginPassword] = useState({});
+    const [createName, setCreateName] = useState('');
+    const [createUserName, setCreateUserName] = useState('');
+    const [createEmail, setCreateEmail] = useState('');
+    const [createPassword, setCreatePassword] = useState('');
+    const [loginEmail, setLoginEmail] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
     const [loginInterface, setLoginInterface] = useState(false);
-    const [userNameExists, setUserNameExists] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('')
+    const [successMessage, setSuccessMessage] = useState('')
 
     function showLoginInterface() {
         setLoginInterface(!loginInterface);
@@ -23,50 +24,53 @@ const Login = () => {
         const docRef = doc(db, collectionName, documentId);
         try {
             const docSnap = await getDoc(docRef);
-            const exists = docSnap.exists();
-            setUserNameExists(exists);
-            console.log(exists);
+            return docSnap.exists();
         } catch (error) {
             console.error(`Error checking document: ${error}`);
         }
     };
 
     function signIn() {
-        checkDocumentIdExists({ collectionName: 'userData', documentId: createUserName });
-        createUserWithEmailAndPassword(auth, createEmail, createPassword, createUserName)
-            .then((userCredential) => {
-                const user = userCredential.user;
-                console.log(user);
-                const userObj = {
-                    Name: createName,
-                    Email: createEmail,
-                    Password: createPassword,
-                    Username: createUserName,
-                };
-                // Generate a unique document ID based on the username
-                const documentId = createUserName; // You can use any logic to generate a unique ID
-                // Reference to the 'userData' collection and the generated document ID
-                const userDocRef = doc(collection(db, "userData"), documentId);
-                // Set the document with the provided data
-                setDoc(userDocRef, userObj)
-                    .then(() => {
-                        console.log("Document successfully written!");
-                    })
-                    .catch((error) => {
-                        console.error("Error writing document: ", error);
-                    });
-            })
-            .catch((error) => {
-                console.error(error);
-            });
+        checkDocumentIdExists({ collectionName: 'userData', documentId: createUserName }) ?
+            (createUserWithEmailAndPassword(auth, createEmail, createPassword)
+                .then((userCredential) => {
+                    const user = userCredential.user;
+                    console.log(user);
+                    const userObj = {
+                        userName: createName,
+                        userEmail: createEmail,
+                        userPassword: createPassword,
+                        userID: createUserName,
+                        userFollowers: [],
+                        userFollowing: []
+                    };
+                    const documentId = createUserName;
+                    const userDocRef = doc(collection(db, "userData"), documentId);
+                    setSuccessMessage('Account Succesfully Created')
+                    setDoc(userDocRef, userObj)
+                        .then(() => {
+                            console.log("Document successfully written!");
+                        })
+                        .catch((error) => {
+                            console.error("Error writing document: ", error);
+                        });
+
+                })
+                .catch((error) => {
+                    console.error(error);
+                }))
+            :
+            setErrorMessage('Username already exists')
     }
 
     function logIn() {
         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
             .then((user) => {
                 console.log(user)
+                setSuccessMessage('Logged In successfully')
             })
             .catch((error) => {
+                setErrorMessage('Error Logging In')
                 console.log(error)
             })
     }
@@ -79,8 +83,8 @@ const Login = () => {
             <div className="user_authentication-wrapper">
                 <h1 className="user_authentication-title">Happening now!</h1>
                 <h2 className="user_authentication-subtitle">Join today.</h2>
-                <span id="error_message"></span>
-                <span id="successful_message"></span>
+                <span id="error_message" style={{ display: `${(errorMessage === '') ? 'none' : 'inline'}` }}>{errorMessage}</span>
+                <span id="successful_message" style={{ display: `${(successMessage === '') ? 'none' : 'inline'}` }}>{successMessage}</span>
                 {loginInterface ?
                     (
                         <>
