@@ -32,6 +32,8 @@ const Login = () => {
 
     function signIn() {
         checkDocumentIdExists({ collectionName: 'userData', documentId: createUserName }) ?
+            setErrorMessage('Username already exists')
+            :
             (createUserWithEmailAndPassword(auth, createEmail, createPassword)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -59,8 +61,6 @@ const Login = () => {
                 .catch((error) => {
                     console.error(error);
                 }))
-            :
-            setErrorMessage('Username already exists')
     }
 
     function logIn() {

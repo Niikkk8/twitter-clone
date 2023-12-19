@@ -12,17 +12,25 @@ import Login from './components/Login';
 import './App.css'
 
 function App() {
-  const [user, setUser] = useState(null);
-
+  const [user, setUser] = useState(false);
   useEffect(() => {
-    const checkLoggedInStatus = auth.onAuthStateChanged((authUser) => {
-      if (authUser) {
-        setUser(authUser);
-      } else {
-        setUser(null);
-      }
-    });
-    checkLoggedInStatus();
+    const checkLoggedInStatus = () => {
+      return new Promise((resolve) => {
+        const unsubscribe = auth.onAuthStateChanged((authUser) => {
+          if (authUser) {
+            resolve(true);
+          } else {
+            resolve(false);
+          }
+          unsubscribe();
+        });
+      });
+    };
+    const setUserStatus = async () => {
+      const isLoggedIn = await checkLoggedInStatus();
+      setUser(isLoggedIn);
+    };
+    setUserStatus();
   }, []);
 
   return (
