@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Logo from '../assets/logo.png';
 import '../styles/Login.css';
 import { auth, db } from '../firebase/Init.js'
@@ -15,32 +15,25 @@ const Login = () => {
     const [loginInterface, setLoginInterface] = useState(false);
     const [errorMessage, setErrorMessage] = useState('')
     const [successMessage, setSuccessMessage] = useState('')
-
     function showLoginInterface() {
         setLoginInterface(!loginInterface);
     }
-    // useEffect(() => {
-    //     const fetchDocumentIds = async () => {
-    //         try {
-    //             const userCollectionRef = collection(db, 'userData');
-    //             const querySnapshot = await getDoc(userCollectionRef);
 
-    //             if (querySnapshot && querySnapshot.docs) {
-    //                 const documentIds = querySnapshot.docs.map((doc) => doc.id);
-    //                 console.log('Document IDs:', documentIds);
-    //             } else {
-    //                 console.error('No documents found in the collection');
-    //             }
-    //         } catch (error) {
-    //             console.error('Error fetching document IDs:', error);
-    //         }
-    //     };
-    //     fetchDocumentIds();
-    // }, []);
+    const checkDocumentIdExists = async ({ documentId }) => {
+        const docRef = doc(collection(db, 'userData'), documentId);
+        try {
+            const docSnap = await getDoc(docRef);
+            return docSnap.exists();
+        } catch (error) {
+            console.error('Error checking document existence:', error);
+            return false;
+        }
+    }
 
-    function signIn() {
-        // (checkDocumentIdExists({ documentId: createUserName }) ?
-        //     setErrorMessage('Username already exists') :
+    async function signIn() {
+        const documentExists = await checkDocumentIdExists({ documentId: createUserName });
+        (documentExists ?
+            setErrorMessage('Username already exists') :
             (createUserWithEmailAndPassword(auth, createEmail, createPassword)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -66,7 +59,7 @@ const Login = () => {
                 })
                 .catch((error) => {
                     console.error(error);
-                }))
+                })))
     }
 
     function logIn() {
@@ -97,7 +90,8 @@ const Login = () => {
                             <form className="create_account-form" onSubmit={(event) => { event.preventDefault(); signIn(); }}>
                                 <div className="create_account-input-wrapper">
                                     <input type="text" name="" id="create_name" placeholder="Your Name" onChange={(event) => setCreateName(event.target.value)} />
-                                    <input type="text" name="" id="create_username" placeholder="Username" onChange={(event) => setCreateUserName(event.target.value)} />
+                                    <input type="text" name="" id="create_username" placeholder="Username" onChange={(event) => setCreateUserName(event.target.value.toLowerCase().replace(/\s/g, ''))} />
+
                                     <input type="email" name="" id="create_email" placeholder="E-mail" onChange={(event) => setCreateEmail(event.target.value)} />
                                     <input type="password" name="" id="create_password" placeholder="Password" onChange={(event) => setCreatePassword(event.target.value)} />
                                 </div>
