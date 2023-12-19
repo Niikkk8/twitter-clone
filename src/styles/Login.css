@@ -42,7 +42,8 @@ button:active{
     transform: translateY(2px);
 }
 
-input{
+.create_account-input-wrapper input,
+.login_input-wrapper input{
     border: 1px solid black;
     border-radius: 12px;
     padding: 12px;
