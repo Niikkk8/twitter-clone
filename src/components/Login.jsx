@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Logo from '../assets/logo.png';
 import '../styles/Login.css';
 import { auth, db } from '../firebase/Init.js'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc, addDoc } from 'firebase/firestore';
 
 const Login = () => {
     const [createName, setCreateName] = useState('');
@@ -20,20 +20,28 @@ const Login = () => {
         setLoginInterface(!loginInterface);
     }
 
-    const checkDocumentIdExists = async ({ collectionName, documentId }) => {
-        const docRef = doc(db, collectionName, documentId);
-        try {
-            const docSnap = await getDoc(docRef);
-            return docSnap.exists();
-        } catch (error) {
-            console.error(`Error checking document: ${error}`);
-        }
-    };
+    // useEffect(() => {
+    //     const fetchDocumentIds = async () => {
+    //         try {
+    //             const userCollectionRef = collection(db, 'userData');
+    //             const querySnapshot = await getDoc(userCollectionRef);
+
+    //             if (querySnapshot && querySnapshot.docs) {
+    //                 const documentIds = querySnapshot.docs.map((doc) => doc.id);
+    //                 console.log('Document IDs:', documentIds);
+    //             } else {
+    //                 console.error('No documents found in the collection');
+    //             }
+    //         } catch (error) {
+    //             console.error('Error fetching document IDs:', error);
+    //         }
+    //     };
+    //     fetchDocumentIds();
+    // }, []);
 
     function signIn() {
-        checkDocumentIdExists({ collectionName: 'userData', documentId: createUserName }) ?
-            setErrorMessage('Username already exists')
-            :
+        // (checkDocumentIdExists({ documentId: createUserName }) ?
+        //     setErrorMessage('Username already exists') :
             (createUserWithEmailAndPassword(auth, createEmail, createPassword)
                 .then((userCredential) => {
                     const user = userCredential.user;
@@ -44,19 +52,18 @@ const Login = () => {
                         userPassword: createPassword,
                         userID: createUserName,
                         userFollowers: [],
-                        userFollowing: []
+                        userFollowing: [],
                     };
                     const documentId = createUserName;
-                    const userDocRef = doc(collection(db, "userData"), documentId);
-                    setSuccessMessage('Account Succesfully Created')
-                    setDoc(userDocRef, userObj)
+                    const userDocRef = doc(collection(db, 'userData'), documentId);
+                    setSuccessMessage('Account Successfully Created');
+                    addDoc(userDocRef, userObj)
                         .then(() => {
-                            console.log("Document successfully written!");
+                            console.log('Document successfully written!');
                         })
                         .catch((error) => {
-                            console.error("Error writing document: ", error);
+                            console.error('Error writing document: ', error);
                         });
-
                 })
                 .catch((error) => {
                     console.error(error);
