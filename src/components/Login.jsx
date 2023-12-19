@@ -3,7 +3,7 @@ import Logo from '../assets/logo.png';
 import '../styles/Login.css';
 import { auth, db } from '../firebase/Init.js'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
-import { collection, doc, setDoc, getDoc, addDoc } from 'firebase/firestore';
+import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
 const Login = () => {
     const [createName, setCreateName] = useState('');
@@ -19,7 +19,6 @@ const Login = () => {
     function showLoginInterface() {
         setLoginInterface(!loginInterface);
     }
-
     // useEffect(() => {
     //     const fetchDocumentIds = async () => {
     //         try {
@@ -57,7 +56,7 @@ const Login = () => {
                     const documentId = createUserName;
                     const userDocRef = doc(collection(db, 'userData'), documentId);
                     setSuccessMessage('Account Successfully Created');
-                    addDoc(userDocRef, userObj)
+                    setDoc(userDocRef, userObj)
                         .then(() => {
                             console.log('Document successfully written!');
                         })
