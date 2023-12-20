@@ -91,7 +91,6 @@ const Login = () => {
                                 <div className="create_account-input-wrapper">
                                     <input type="text" name="" id="create_name" placeholder="Your Name" onChange={(event) => setCreateName(event.target.value)} />
                                     <input type="text" name="" id="create_username" placeholder="Username" onChange={(event) => setCreateUserName(event.target.value.toLowerCase().replace(/\s/g, ''))} />
-
                                     <input type="email" name="" id="create_email" placeholder="E-mail" onChange={(event) => setCreateEmail(event.target.value)} />
                                     <input type="password" name="" id="create_password" placeholder="Password" onChange={(event) => setCreatePassword(event.target.value)} />
                                 </div>

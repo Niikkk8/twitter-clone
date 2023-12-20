@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { auth } from './firebase/Init';
+import { auth, db } from './firebase/Init';
 import Feed from './components/Feed';
 import Sidebar from './components/Sidebar';
 import Widgets from './components/Widgets';
@@ -10,11 +10,15 @@ import Messages from './components/Messages';
 import Profile from './components/Profile';
 import Login from './components/Login';
 import './App.css'
+import { collection, getDocs } from 'firebase/firestore';
 
 function App() {
   const [user, setUser] = useState(false);
+  const [userData, setUserData] = useState([]);
+  const [currentUserData, setCurrentUserData] = useState(null);
+
   useEffect(() => {
-    const checkLoggedInStatus = () => {
+    const checkLoggedInStatus = async () => {
       return new Promise((resolve) => {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
           if (authUser) {
@@ -26,12 +30,37 @@ function App() {
         });
       });
     };
+
     const setUserStatus = async () => {
       const isLoggedIn = await checkLoggedInStatus();
       setUser(isLoggedIn);
     };
+
     setUserStatus();
   }, []);
+
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const userDataCollection = collection(db, 'userData');
+        const querySnapshot = await getDocs(userDataCollection);
+        const userDataArray = querySnapshot.docs.map((doc) => doc.data());
+        setUserData(userDataArray);
+      } catch (error) {
+        console.error('Error fetching user data:', error.message);
+      }
+    };
+
+    fetchUserData();
+  }, []);
+
+  useEffect(() => {
+    const foundUserData = userData.find((user) => user.userEmail === auth?.currentUser?.email);
+    setCurrentUserData(foundUserData || null);
+  }, [userData]);
+
+  // console.log(currentUserData)
+
   return (
     <>
       {user ? (
@@ -47,7 +76,7 @@ function App() {
               <Route path='/notifications/mentions' />
             </Route>
             <Route path='/messages' element={<Messages />} />
-            <Route path='/profile/' element={<Profile />}>
+            <Route path='/profile/' element={<Profile currentUserData={currentUserData}/>}>
               <Route path='/profile/posts' />
               <Route path='/profile/replies' />
               <Route path='/profile/highlights' />

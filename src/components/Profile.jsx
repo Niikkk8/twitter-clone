@@ -1,18 +1,32 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '../styles/Profile.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Banner from '../assets/profile_banner.jpeg'
 import ProfilePicture from '../assets/demo_profile-picture.jpg'
 import { Link, Routes, Route, useLocation } from 'react-router-dom';
 
-const Profile = () => {
+
+const Profile = ({ currentUserData }) => {
     const location = useLocation();
+    const [userData, setUserData] = useState(null);
+
+    useEffect(() => {
+        if (currentUserData) {
+            setUserData(currentUserData);
+        }
+    }, [currentUserData]);
+
+    if (!userData) {
+        return <h3 className='profile'>Loading...</h3>;
+    }
+
+
     return (
         <div className='profile'>
             <div className="header_wrapper">
                 <FontAwesomeIcon icon="arrow-left" className="back-icon" />
                 <div className="header_title-wrapper">
-                    <h2 className="header_title">Niket Shah</h2>
+                    <h2 className="header_title">{userData.userName}</h2>
                     <span className="header_posts-number">21 posts</span>
                 </div>
             </div>
@@ -24,8 +38,8 @@ const Profile = () => {
                         <button className="edit-profile">Edit Profile</button>
                     </div>
                     <div className="profile_username-wrapper">
-                        <span className="profile_name">Niket Shah</span>
-                        <span className="profile_username">@nik8</span>
+                        <span className="profile_name">{userData.userName}</span>
+                        <span className="profile_username">@{userData.userID}</span>
                     </div>
                     <div className="followers-following">
                         <span className="following-number">123</span>

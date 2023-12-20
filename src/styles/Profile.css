@@ -74,9 +74,10 @@
 }
 
 .edit-profile{
+    color: var(--twitter-black);
     font-weight: 500;
     background-color: transparent;
-    padding: 8px 12px;
+    padding: 8px 14px;
     border: 1px solid #657786;
     margin-top: 48px;
     border-radius: 20px;
