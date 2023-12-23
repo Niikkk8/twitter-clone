@@ -111,7 +111,7 @@ const Login = () => {
                                     <input type="email" name="" id="login_email" placeholder="E-mail" onChange={(event) => setLoginEmail(event.target.value)} />
                                     <input type="password" name="" id="login_password" placeholder="Password" onChange={(event) => setLoginPassword(event.target.value)} />
                                 </div>
-                                <button type="submit">Sign in</button>
+                                <button type="submit" className='login_submit'>Sign in</button>
                             </form>
                             <div className="login_difference-wrapper">
                                 <hr />

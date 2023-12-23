@@ -21,7 +21,7 @@
     font-weight: 800;
 }
 
-.search_wrapper {
+.explore_form {
     display: flex;
     justify-content: space-between;
     margin: 16px;
@@ -36,6 +36,14 @@
     outline: none;
     font-size: 15px;
     width: 95%;
+}
+
+.explore_submit{
+    padding: 4px;
+    background-color: transparent;
+    outline: none;
+    border: none;
+    cursor: pointer;
 }
 
 .search_icon {

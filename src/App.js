@@ -16,6 +16,7 @@ function App() {
   const [user, setUser] = useState(false);
   const [userData, setUserData] = useState([]);
   const [currentUserData, setCurrentUserData] = useState(null);
+  const [otherUserData, setOtherUserData] = useState(null);
 
   useEffect(() => {
     const checkLoggedInStatus = async () => {
@@ -45,6 +46,8 @@ function App() {
         const userDataCollection = collection(db, 'userData');
         const querySnapshot = await getDocs(userDataCollection);
         const userDataArray = querySnapshot.docs.map((doc) => doc.data());
+        const otherUserDataArray = userDataArray.filter((user) => user.userEmail !== auth?.currentUser?.email);
+        setOtherUserData(otherUserDataArray);
         setUserData(userDataArray);
       } catch (error) {
         console.error('Error fetching user data:', error.message);
@@ -60,6 +63,7 @@ function App() {
   }, [userData]);
 
   // console.log(currentUserData)
+  // console.log(otherUserData)
 
   return (
     <>
@@ -69,14 +73,14 @@ function App() {
           <Routes>
             <Route index element={<Feed />} />
             <Route path='/feed' element={<Feed />} />
-            <Route path='/explore' element={<Explore />} />
+            <Route path='/explore' element={<Explore otherUserData={otherUserData}/>} />
             <Route path='/notifications/' element={<Notifications />} >
               <Route path='/notifications/all' />
               <Route path='/notifications/verified' />
               <Route path='/notifications/mentions' />
             </Route>
             <Route path='/messages' element={<Messages />} />
-            <Route path='/profile/' element={<Profile currentUserData={currentUserData}/>}>
+            <Route path='/profile/' element={<Profile currentUserData={currentUserData} />}>
               <Route path='/profile/posts' />
               <Route path='/profile/replies' />
               <Route path='/profile/highlights' />

@@ -24,7 +24,8 @@
     width: 60%;
 }
 
-button{
+.create_account-submit,
+.login_submit{
     font-size: 14px;
     color: #f5f8fa;
     font-weight: 400;
@@ -35,7 +36,8 @@ button{
     background-color: #1da1f2;
 }
 
-button:active{
+.create_account-submit:active,
+.login_submit:active{
     background-color: transparent;
     border: 1px solid var(--twitter-black);
     color: var(--twitter-black);
@@ -142,6 +144,8 @@ hr{
     color: #1da1f2;
     font-size: 16px;
     cursor: pointer;
+    outline: none;
+    border: none;
 }
 
 .login_create-button:active{
