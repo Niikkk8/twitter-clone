@@ -23,3 +23,20 @@ body{
     height: 100vh;
     margin: 0 auto;
 }
+
+.app_loader{
+    color: rgb(67, 211, 67);
+    font-size: 45px;
+    width: 100%;
+    margin: 200px auto;
+    animation: loader 350ms linear infinite;
+}
+
+@keyframes loader{
+    0%{
+        transform: rotate(90deg);
+    }
+    100%{
+        transform: rotate(450deg);
+    }
+}

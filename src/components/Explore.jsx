@@ -33,8 +33,8 @@ const Explore = ({ otherUserData }) => {
             </form>
             <div className="search_result-wrapper">
                 {filteredUserData?.map((user) => (
-                    <Link to={`/profile/${user.userID}`} className='search_result-link'>
-                        <div className="search_result-user" key={user.userID}>
+                    <Link to={`/profile/${user.userID}`} className='search_result-link' key={user.userID}>
+                        <div className="search_result-user">
                             <img src={ProfilePicture} alt="" className="search_result-picture" />
                             <div className="search_result-userinfo">
                                 <h4 className="search_result-username">{user.userName}</h4>

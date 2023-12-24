@@ -11,6 +11,7 @@ import Profile from './components/Profile';
 import Login from './components/Login';
 import './App.css';
 import { collection, getDocs } from 'firebase/firestore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 function App() {
   const [user, setUser] = useState(false);
@@ -22,7 +23,7 @@ function App() {
   const handleLogin = (user) => {
     setUser(true);
   };
-  
+
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       return new Promise((resolve) => {
@@ -74,7 +75,7 @@ function App() {
   return (
     <>
       {loading ? (
-        <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}>Loading...</h3>
+        <FontAwesomeIcon icon="circle-notch" className='app_loader' />
       ) : (
         <>
           {user ? (

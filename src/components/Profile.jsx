@@ -10,7 +10,6 @@ const Profile = (props) => {
     const [userData, setUserData] = useState(null);
     const [otherUserData, setOtherUserData] = useState(null);
     const [displayUserData, setDisplayUserData] = useState(null);
-    const [followingStatus, setFollowingStatus] = useState(null)
 
     const { id } = useParams();
 
@@ -33,7 +32,7 @@ const Profile = (props) => {
     if (!displayUserData) {
         return <h3 className='profile' style={{ textAlign: 'center', padding: '50px' }}>USER NOT FOUND</h3>;
     }
-    console.log(otherUserData)
+
     return (
         <div className='profile'>
             <div className="header_wrapper">
@@ -53,17 +52,15 @@ const Profile = (props) => {
                             :
                             <button className="edit-profile">Edit Profile</button>
                         }
-
-
                     </div>
                     <div className="profile_username-wrapper">
                         <span className="profile_name">{displayUserData?.userName}</span>
                         <span className="profile_username">@{displayUserData?.userID}</span>
                     </div>
                     <div className="followers-following">
-                        <span className="following-number">123</span>
+                        <span className="following-number">{displayUserData?.userFollowing.length}</span>
                         <span className="following">Following</span>
-                        <span className="followers-number">123</span>
+                        <span className="followers-number">{displayUserData?.userFollowers.length}</span>
                         <span className="followers">Followers</span>
                     </div>
                     <div className="profile_links">
