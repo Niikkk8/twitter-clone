@@ -38,7 +38,7 @@
     width: 95%;
 }
 
-.explore_submit{
+.explore_submit {
     padding: 4px;
     background-color: transparent;
     outline: none;
@@ -48,4 +48,43 @@
 
 .search_icon {
     color: var(--twitter-dark-gray);
+}
+
+.search_result-wrapper {
+    border-top: 1px solid var(--twitter-extra-light-gray);
+    padding: 12px;
+}
+
+.search_result-link{
+    text-decoration: none;
+    color: var(--twitter-black);
+}
+
+.search_result-user {
+    background-color: #f7f7f7;
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    margin-bottom: 8px;
+    border-radius: 40px;
+}
+
+.search_result-picture {
+    width: 60px;
+    border-radius: 30px;
+}
+
+.search_result-userinfo{
+    margin-left: 12px;
+}
+
+.search_result-username{
+    font-weight: 500;
+    font-size: 18px;
+}
+
+.search_result-userID {
+    font-size: 14px;
+    font-weight: 300;
+    filter: opacity(0.8);
 }

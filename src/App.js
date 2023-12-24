@@ -9,7 +9,7 @@ import Notifications from './components/Notifications';
 import Messages from './components/Messages';
 import Profile from './components/Profile';
 import Login from './components/Login';
-import './App.css'
+import './App.css';
 import { collection, getDocs } from 'firebase/firestore';
 
 function App() {
@@ -17,7 +17,12 @@ function App() {
   const [userData, setUserData] = useState([]);
   const [currentUserData, setCurrentUserData] = useState(null);
   const [otherUserData, setOtherUserData] = useState(null);
+  const [loading, setLoading] = useState(true);
 
+  const handleLogin = (user) => {
+    setUser(true);
+  };
+  
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       return new Promise((resolve) => {
@@ -49,6 +54,7 @@ function App() {
         const otherUserDataArray = userDataArray.filter((user) => user.userEmail !== auth?.currentUser?.email);
         setOtherUserData(otherUserDataArray);
         setUserData(userDataArray);
+        setLoading(false);
       } catch (error) {
         console.error('Error fetching user data:', error.message);
       }
@@ -67,33 +73,39 @@ function App() {
 
   return (
     <>
-      {user ? (
-        <div className='app'>
-          <Sidebar />
-          <Routes>
-            <Route index element={<Feed />} />
-            <Route path='/feed' element={<Feed />} />
-            <Route path='/explore' element={<Explore otherUserData={otherUserData}/>} />
-            <Route path='/notifications/' element={<Notifications />} >
-              <Route path='/notifications/all' />
-              <Route path='/notifications/verified' />
-              <Route path='/notifications/mentions' />
-            </Route>
-            <Route path='/messages' element={<Messages />} />
-            <Route path='/profile/' element={<Profile currentUserData={currentUserData} />}>
-              <Route path='/profile/posts' />
-              <Route path='/profile/replies' />
-              <Route path='/profile/highlights' />
-              <Route path='/profile/media' />
-              <Route path='/profile/likes' />
-            </Route>
-          </Routes>
-          <Widgets />
-        </div>
+      {loading ? (
+        <h3 style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '50vh' }}>Loading...</h3>
       ) : (
-        <div className='app'>
-          <Login />
-        </div>
+        <>
+          {user ? (
+            <div className='app'>
+              <Sidebar currentUserData={currentUserData} />
+              <Routes>
+                <Route index element={<Feed />} />
+                <Route path='/feed' element={<Feed />} />
+                <Route path='/explore' element={<Explore otherUserData={otherUserData} />} />
+                <Route path='/notifications/' element={<Notifications />} >
+                  <Route path='/notifications/all' />
+                  <Route path='/notifications/verified' />
+                  <Route path='/notifications/mentions' />
+                </Route>
+                <Route path='/messages' element={<Messages />} />
+                <Route path='/profile/:id' element={<Profile currentUserData={currentUserData} otherUserData={otherUserData} />}>
+                  <Route path='/profile/:id/posts' />
+                  <Route path='/profile/:id/replies' />
+                  <Route path='/profile/:id/highlights' />
+                  <Route path='/profile/:id/media' />
+                  <Route path='/profile/:id/likes' />
+                </Route>
+              </Routes>
+              <Widgets />
+            </div>
+          ) : (
+            <div className='app'>
+              <Login onLogin={handleLogin} />
+            </div>
+          )}
+        </>
       )}
     </>
   );

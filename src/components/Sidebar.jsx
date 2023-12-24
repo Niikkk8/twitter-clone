@@ -3,7 +3,8 @@ import SidebarOptions from './SidebarOptions';
 import Logo from '../assets/logo.png';
 import { Link, useLocation } from 'react-router-dom';
 
-const Sidebar = () => {
+const Sidebar = ({ currentUserData }) => {
+    const user = currentUserData;
     const location = useLocation();
     return (
         <div className="sidebar">
@@ -22,8 +23,8 @@ const Sidebar = () => {
             <Link to="/messages" className='sidebar_links'>
                 <SidebarOptions active={location.pathname.includes('/messages')} text="Messages" icon="envelope" />
             </Link>
-            <Link to="/profile" className='sidebar_links'>
-                <SidebarOptions active={location.pathname.includes('/profile')} text="Profile" icon="user" />
+            <Link to={`/profile/${user?.userID}`} className='sidebar_links'>
+                <SidebarOptions active={location.pathname.includes(`/profile/${user?.userID}`)} text="Profile" icon="user" />
             </Link>
             <button className="sidebar_tweet">Post</button>
         </div>
@@ -31,4 +32,3 @@ const Sidebar = () => {
 }
 
 export default Sidebar;
-// ${location.pathname.includes('/posts') ? 'profile_link-active' : ''

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import '../styles/Explore.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePicture from '../assets/demo_profile-picture.jpg'
+import { Link } from 'react-router-dom';
 
 const Explore = ({ otherUserData }) => {
     const [inputValue, setInputValue] = useState('');
@@ -18,9 +19,6 @@ const Explore = ({ otherUserData }) => {
             user.userName.toLowerCase().includes(inputValue)
         ));
     };
-    filteredUserData?.forEach((user) => {
-        console.log(user);
-    })
 
     return (
         <div className="explore">
@@ -28,13 +26,23 @@ const Explore = ({ otherUserData }) => {
                 <h2 className="explore_header-heading">Explore</h2>
             </div>
             <form onSubmit={handleSubmit} className="explore_form">
-                <input id="explore_input" type="text" placeholder="Search" className="explore_input" value={inputValue} onChange={handleInputChange} />
+                <input id="explore_input" type="text" placeholder="Search" className="explore_input" value={inputValue} onChange={handleInputChange} autoComplete='off' />
                 <button type="submit" className="explore_submit">
                     <FontAwesomeIcon icon="search" className="search_icon" />
                 </button>
             </form>
             <div className="search_result-wrapper">
-                
+                {filteredUserData?.map((user) => (
+                    <Link to={`/profile/${user.userID}`} className='search_result-link'>
+                        <div className="search_result-user" key={user.userID}>
+                            <img src={ProfilePicture} alt="" className="search_result-picture" />
+                            <div className="search_result-userinfo">
+                                <h4 className="search_result-username">{user.userName}</h4>
+                                <span className="search_result-userID">@{user.userID}</span>
+                            </div>
+                        </div>
+                    </Link>
+                ))}
             </div>
         </div>
     );

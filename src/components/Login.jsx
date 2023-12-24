@@ -5,7 +5,7 @@ import { auth, db } from '../firebase/Init.js'
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from 'firebase/auth';
 import { collection, doc, setDoc, getDoc } from 'firebase/firestore';
 
-const Login = () => {
+const Login = ({ onLogin }) => {
     const [createName, setCreateName] = useState('');
     const [createUserName, setCreateUserName] = useState('');
     const [createEmail, setCreateEmail] = useState('');
@@ -32,46 +32,43 @@ const Login = () => {
 
     async function signIn() {
         const documentExists = await checkDocumentIdExists({ documentId: createUserName });
-        (documentExists ?
-            setErrorMessage('Username already exists') :
-            (createUserWithEmailAndPassword(auth, createEmail, createPassword)
-                .then((userCredential) => {
-                    const user = userCredential.user;
-                    console.log(user);
-                    const userObj = {
-                        userName: createName,
-                        userEmail: createEmail,
-                        userPassword: createPassword,
-                        userID: createUserName,
-                        userFollowers: [],
-                        userFollowing: [],
-                    };
-                    const documentId = createUserName;
-                    const userDocRef = doc(collection(db, 'userData'), documentId);
-                    setSuccessMessage('Account Successfully Created');
-                    setDoc(userDocRef, userObj)
-                        .then(() => {
-                            console.log('Document successfully written!');
-                        })
-                        .catch((error) => {
-                            console.error('Error writing document: ', error);
-                        });
-                })
-                .catch((error) => {
-                    console.error(error);
-                })))
+        if (documentExists) {
+            setErrorMessage('Username already exists');
+        } else {
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, createEmail, createPassword);
+                const user = userCredential.user;
+                console.log(user);
+                const userObj = {
+                    userName: createName,
+                    userEmail: createEmail,
+                    userPassword: createPassword,
+                    userID: createUserName,
+                    userFollowers: [],
+                    userFollowing: [],
+                };
+                const documentId = createUserName;
+                const userDocRef = doc(collection(db, 'userData'), documentId);
+                setSuccessMessage('Account Successfully Created');
+                await setDoc(userDocRef, userObj);
+                onLogin(user);
+            } catch (error) {
+                console.error(error);
+            }
+        }
     }
 
     function logIn() {
         signInWithEmailAndPassword(auth, loginEmail, loginPassword)
             .then((user) => {
-                console.log(user)
-                setSuccessMessage('Logged In successfully')
+                console.log(user);
+                setSuccessMessage('Logged In successfully');
+                onLogin(user);
             })
             .catch((error) => {
-                setErrorMessage('Error Logging In')
-                console.log(error)
-            })
+                setErrorMessage('Error Logging In');
+                console.log(error);
+            });
     }
 
     return (

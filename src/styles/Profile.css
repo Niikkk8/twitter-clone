@@ -49,6 +49,7 @@
     width: 100%;
     aspect-ratio: 26/9;
     max-height: 240px;
+    object-fit: cover;
 }
 
 .absolute_postion{
@@ -73,7 +74,8 @@
     border: 4px solid white;
 }
 
-.edit-profile{
+.edit-profile,
+.follow_button{
     color: var(--twitter-black);
     font-weight: 500;
     background-color: transparent;
@@ -85,7 +87,8 @@
     transition: all 300ms ease;
 }
 
-.edit-profile:hover{
+.edit-profile:hover,
+.follow_button:hover{
     background-color: rgba(128, 128, 128, 0.514);
 }
 
@@ -103,7 +106,7 @@
 .profile_username{
     font-size: 14px;
     font-weight: 300;
-    filter: opacity(0.75);
+    filter: opacity(0.8);
 }
 
 .followers-following{
