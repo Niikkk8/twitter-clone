@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/TweetBox.css';
 import Profile from '../assets/demo_profile-picture.jpg'
-import { collection, addDoc } from 'firebase/firestore';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db } from '../firebase/Init';
 
 const TweetBox = (props) => {
@@ -16,7 +16,8 @@ const TweetBox = (props) => {
             const newPost = {
                 userID: userData.userID,
                 userName: userData.userName,
-                postContent: postContent
+                postContent: postContent,
+                postTimeStamp: serverTimestamp(),
             };
             await addDoc(userPostsCollection, newPost);
             setPostContent('');
