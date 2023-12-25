@@ -55,6 +55,10 @@ const Profile = (props) => {
         setIsFollowing(false);
     };
 
+    if (!displayUserData) {
+        return <h3 className='profile' style={{ textAlign: 'center', padding: '50px' }}>USER NOT FOUND</h3>;
+    }
+
     return (
         <div className='profile'>
             <div className="header_wrapper">
