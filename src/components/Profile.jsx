@@ -5,13 +5,16 @@ import Banner from '../assets/profile_banner.jpg';
 import ProfilePicture from '../assets/demo_profile-picture.jpg';
 import { Link, Routes, Route, useLocation, useParams } from 'react-router-dom';
 
+import { db } from '../firebase/Init';
+import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+
 const Profile = (props) => {
     const location = useLocation();
+    const { id } = useParams();
     const [userData, setUserData] = useState(null);
     const [otherUserData, setOtherUserData] = useState(null);
     const [displayUserData, setDisplayUserData] = useState(null);
-
-    const { id } = useParams();
+    const [isFollowing, setIsFollowing] = useState(false);
 
     useEffect(() => {
         if (props.currentUserData) {
@@ -27,11 +30,30 @@ const Profile = (props) => {
 
     useEffect(() => {
         setDisplayUserData(id === userData?.userID ? userData : id === otherUserData?.[0]?.userID ? otherUserData[0] : null);
+        setIsFollowing(userData?.userFollowing.includes(id));
     }, [id, userData, otherUserData]);
 
-    if (!displayUserData) {
-        return <h3 className='profile' style={{ textAlign: 'center', padding: '50px' }}>USER NOT FOUND</h3>;
-    }
+    const handleFollow = async () => {
+        await updateDoc(doc(db, 'userData', id), {
+            userFollowers: arrayUnion(userData.userID)
+        });
+        await updateDoc(doc(db, 'userData', userData.userID), {
+            userFollowing: arrayUnion(id)
+        });
+
+        setIsFollowing(true);
+    };
+
+    const handleUnfollow = async () => {
+        await updateDoc(doc(db, 'userData', id), {
+            userFollowers: arrayRemove(userData.userID)
+        });
+        await updateDoc(doc(db, 'userData', userData.userID), {
+            userFollowing: arrayRemove(id)
+        });
+
+        setIsFollowing(false);
+    };
 
     return (
         <div className='profile'>
@@ -47,8 +69,19 @@ const Profile = (props) => {
                 <div className="profile_information-wrapper">
                     <div className="profile_picture-edit">
                         <img src={ProfilePicture} alt="" className="profile_picture" />
-                        {(otherUserData.length > 0) ?
-                            <button className="follow_button">Follow</button>
+                        {(otherUserData?.length > 0) ?
+                            <>{
+                                isFollowing ? (
+                                    <button className="follow_button" onClick={handleUnfollow}>
+                                        Unfollow
+                                    </button>
+                                ) : (
+                                    <button className="follow_button" onClick={handleFollow}>
+                                        Follow
+                                    </button>
+                                )
+                            }
+                            </>
                             :
                             <button className="edit-profile">Edit Profile</button>
                         }
@@ -58,14 +91,14 @@ const Profile = (props) => {
                         <span className="profile_username">@{displayUserData?.userID}</span>
                     </div>
                     <div className="followers-following">
-                        <span className="following-number">{displayUserData?.userFollowing.length}</span>
+                        <span className="following-number">{displayUserData?.userFollowing?.length}</span>
                         <span className="following">Following</span>
-                        <span className="followers-number">{displayUserData?.userFollowers.length}</span>
+                        <span className="followers-number">{displayUserData?.userFollowers?.length}</span>
                         <span className="followers">Followers</span>
                     </div>
                     <div className="profile_links">
                         <div className="profile_link-wrapper">
-                            <Link to="./posts" className={`profile_link ${(location.pathname === `/profile/${displayUserData.userID}` || location.pathname.includes('/posts')) ? 'profile_link-active' : ''}`}>Posts</Link>
+                            <Link to="./posts" className={`profile_link ${(location.pathname === `/profile/${displayUserData?.userID}` || location.pathname.includes('/posts')) ? 'profile_link-active' : ''}`}>Posts</Link>
                         </div>
                         <div className="profile_link-wrapper">
                             <Link to="./replies" className={`profile_link ${location.pathname.includes('/replies') ? 'profile_link-active' : ''}`}>Replies</Link>

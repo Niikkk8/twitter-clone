@@ -84,7 +84,7 @@ function App() {
               <Routes>
                 <Route index element={<Feed />} />
                 <Route path='/feed' element={<Feed />} />
-                <Route path='/explore' element={<Explore otherUserData={otherUserData} />} />
+                <Route path='/explore' element={<Explore userData={userData} />} />
                 <Route path='/notifications/' element={<Notifications />} >
                   <Route path='/notifications/all' />
                   <Route path='/notifications/verified' />

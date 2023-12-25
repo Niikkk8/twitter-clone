@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ProfilePicture from '../assets/demo_profile-picture.jpg'
 import { Link } from 'react-router-dom';
 
-const Explore = ({ otherUserData }) => {
+const Explore = ({ userData }) => {
     const [inputValue, setInputValue] = useState('');
     const [filteredUserData, setFiltederedUserData] = useState(null)
 
@@ -14,7 +14,7 @@ const Explore = ({ otherUserData }) => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        setFiltederedUserData(otherUserData.filter((user) =>
+        setFiltederedUserData(userData?.filter((user) =>
             user.userID.toLowerCase().includes(inputValue) ||
             user.userName.toLowerCase().includes(inputValue)
         ));
