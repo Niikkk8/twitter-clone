@@ -1,19 +1,41 @@
-import React from 'react';
+import React, { useState } from 'react';
 import '../styles/TweetBox.css';
 import Profile from '../assets/demo_profile-picture.jpg'
+import { collection, addDoc } from 'firebase/firestore';
+import { db } from '../firebase/Init';
 
-const TweetBox = () => {
+const TweetBox = (props) => {
+    const [postContent, setPostContent] = useState('');
+    const userData = props.currentUserData;
+    const postTweet = async () => {
+        if (postContent.trim() === '') {
+            return;
+        }
+        try {
+            const userPostsCollection = collection(db, 'userPosts');
+            const newPost = {
+                userID: userData.userID,
+                userName: userData.userName,
+                postContent: postContent
+            };
+            await addDoc(userPostsCollection, newPost);
+            setPostContent('');
+        } catch (error) {
+            console.error('Error adding post to Firestore:', error);
+        }
+    };
+
     return (
         <div className="tweetbox">
-            <form className="tweetbox_form">
+            <form className="tweetbox_form" onSubmit={(event) => { event.preventDefault(); postTweet(); }}>
                 <div className="tweetbox_input-wrapper">
                     <img src={Profile} alt="" className="tweetbox_profile" />
-                    <input type="text" placeholder="What is happening?!" className="tweetbox_input" required/>
+                    <input type="text" placeholder="What is happening?!" className="tweetbox_input" value={postContent} onChange={(event) => setPostContent(event.target.value)} required />
                 </div>
-                <button className="tweetbox_button">Post</button>
+                <button className="tweetbox_button" type='submit'>Post</button>
             </form>
         </div>
     );
-}
+};
 
 export default TweetBox;

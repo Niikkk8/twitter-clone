@@ -82,8 +82,8 @@ function App() {
             <div className='app'>
               <Sidebar currentUserData={currentUserData} />
               <Routes>
-                <Route index element={<Feed />} />
-                <Route path='/feed' element={<Feed />} />
+                <Route index element={<Feed currentUserData={currentUserData} userData={userData} />} />
+                <Route path='/feed' element={<Feed currentUserData={currentUserData} userData={userData}/>} />
                 <Route path='/explore' element={<Explore userData={userData} />} />
                 <Route path='/notifications/' element={<Notifications />} >
                   <Route path='/notifications/all' />

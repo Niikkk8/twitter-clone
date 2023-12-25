@@ -40,7 +40,6 @@ const Profile = (props) => {
         await updateDoc(doc(db, 'userData', userData.userID), {
             userFollowing: arrayUnion(id)
         });
-
         setIsFollowing(true);
     };
 
