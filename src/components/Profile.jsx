@@ -51,7 +51,6 @@ const Profile = (props) => {
         await updateDoc(doc(db, 'userData', userData.userID), {
             userFollowing: arrayRemove(id)
         });
-
         setIsFollowing(false);
     };
 
