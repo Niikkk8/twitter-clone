@@ -84,7 +84,7 @@ const Profile = (props) => {
                 <FontAwesomeIcon icon="arrow-left" className="back-icon" />
                 <div className="header_title-wrapper">
                     <h2 className="header_title">{displayUserData?.userName}</h2>
-                    <span className="header_posts-number">21 posts</span>
+                    <span className="header_posts-number">{sortedPosts?.length} posts</span>
                 </div>
             </div>
             <img src={Banner} alt="" className="profile_banner-image" />
