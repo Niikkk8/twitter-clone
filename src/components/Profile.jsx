@@ -4,9 +4,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Banner from '../assets/profile_banner.jpg';
 import ProfilePicture from '../assets/demo_profile-picture.jpg';
 import { Link, Routes, Route, useLocation, useParams } from 'react-router-dom';
-
 import { db } from '../firebase/Init';
-import { doc, updateDoc, arrayUnion, arrayRemove } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, arrayRemove, collection, query, orderBy, where, getDocs } from "firebase/firestore";
+import Post from './Post';
 
 const Profile = (props) => {
     const location = useLocation();
@@ -15,6 +15,7 @@ const Profile = (props) => {
     const [otherUserData, setOtherUserData] = useState(null);
     const [displayUserData, setDisplayUserData] = useState(null);
     const [isFollowing, setIsFollowing] = useState(false);
+    const [sortedPosts, setSortedPosts] = useState([]);
 
     useEffect(() => {
         if (props.currentUserData) {
@@ -53,6 +54,25 @@ const Profile = (props) => {
 
         setIsFollowing(false);
     };
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const collectionRef = collection(db, 'userPosts');
+                const finalQuery = query(collectionRef, orderBy('postTimeStamp', 'desc'), where('userID', '==', displayUserData?.userID));
+                const querySnapshot = await getDocs(finalQuery);
+                const data = querySnapshot.docs.map((doc) => ({
+                    id: doc.id,
+                    ...doc.data(),
+                }));
+                setSortedPosts(data);
+            } catch (error) {
+                console.error('Error fetching data:', error.message);
+            }
+        };
+
+        fetchData();
+    }, [displayUserData]);
 
     if (!displayUserData) {
         return <h3 className='profile' style={{ textAlign: 'center', padding: '50px' }}>USER NOT FOUND</h3>;
@@ -118,8 +138,12 @@ const Profile = (props) => {
                     </div>
                 </div>
                 <Routes>
-                    <Route index element={<h3>Posts Page</h3>} />
-                    <Route path='posts' element={<h3>Posts Page</h3>} />
+                    <Route index element={sortedPosts?.map((post) => (
+                        <Post key={post.id} post={post} />
+                    ))} />
+                    <Route path='posts' element={sortedPosts?.map((post) => (
+                        <Post key={post.id} post={post} />
+                    ))} />
                     <Route path='replies' element={<h3>Replies Page</h3>} />
                     <Route path='highlights' element={<h3>Highlights Page</h3>} />
                     <Route path='media' element={<h3>Media Page</h3>} />
