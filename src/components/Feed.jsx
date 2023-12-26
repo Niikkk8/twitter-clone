@@ -21,7 +21,6 @@ const Feed = (props) => {
                 } else {
                     finalQuery = query(collectionRef, orderBy('postTimeStamp', 'desc'), where('userID', '==', currentUserData?.userID));
                 }
-
                 const querySnapshot = await getDocs(finalQuery);
                 const data = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -42,16 +41,19 @@ const Feed = (props) => {
                 <h2 className="feed_header-heading">Home</h2>
             </div>
             <TweetBox currentUserData={currentUserData} />
-            <Post
-                post={{
-                    userName: 'Niket Shah',
-                    userID: 'nik8',
-                    postContent: "This is a static post. If you dont see any posts, it's probably because you dont follow anyone yet, or the people you follow havent posted anything. It's suggested that you follow someone or you can post something too"
-                }}
-            />
-            {sortedPosts?.map((post) => (
-                <Post key={post.id} post={post} />
-            ))}
+            {(sortedPosts?.length > 0) ?
+                (sortedPosts?.map((post) => (
+                    <Post key={post.id} post={post} />
+                )))
+                :
+                <Post
+                    post={{
+                        userName: 'Niket Shah',
+                        userID: 'nik8',
+                        postContent: "This is a static post. If you dont see any posts, it's probably because you dont follow anyone yet, or the people you follow havent posted anything. It's suggested that you follow someone or you can post something too"
+                    }}
+                />
+            }
         </div>
     );
 };
