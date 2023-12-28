@@ -1,0 +1,29 @@
+.logout_modal {
+    position: absolute;
+    top: -68px;
+}
+
+.logout_options {
+    text-align: right;
+}
+
+.logout_primary-button {
+    font-size: 12px;
+    color: var(--twitter-white);
+    background-color: var(--twitter-color);
+    padding: 6px;
+    border-radius: 4px;
+    margin-right: 4px;
+    border: none;
+    outline: none;
+}
+
+.logout_secondary-button {
+    background-color: transparent;
+    font-size: 12px;
+    padding: 4px;
+    border-radius: 4px;
+    margin-right: 4px;
+    border: 1px solid black;
+    outline: none;
+}

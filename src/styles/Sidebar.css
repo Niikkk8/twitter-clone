@@ -1,12 +1,15 @@
-.sidebar{
+.sidebar {
     border-right: 1px solid var(--twitter-background);
     flex: 0.15;
     min-width: 250px;
     padding: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-.sidebar_logo{
-    margin:24px 12px 12px 12px;
+.sidebar_logo {
+    margin: 24px 12px 12px 12px;
     width: 35px;
 }
 
@@ -35,6 +38,49 @@
     transition: all 0s;
 }
 
-.sidebar_links{
+.sidebar_link {
     text-decoration: none;
+}
+
+
+.sidebar_logout-wrapper {
+    position: relative;
+    border-radius: 40px;
+    margin-bottom: 8px;
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logout_modal{
+    position: absolute;
+}
+
+.sidebar_logout-wrapper:hover{
+    background-color: var(--twitter-extra-light-gray);
+}
+
+.sidebar_info-wrapper{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.sidebar_profile{
+    width: 45px;
+    border-radius: 50%;
+}
+
+.account_info-wrapper{
+    margin-left: 8px;
+}
+
+.account_name{
+    font-weight: 500;
+}
+
+.account_username{
+    font-size: 14px;
+    filter: opacity(0.8);
 }

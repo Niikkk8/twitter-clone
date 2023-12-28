@@ -24,6 +24,11 @@ function App() {
     setUser(true);
   };
 
+  const handleLogout = () => {
+    setUser(false);
+    setCurrentUserData(null);
+  };
+
   useEffect(() => {
     const checkLoggedInStatus = async () => {
       return new Promise((resolve) => {
@@ -80,10 +85,10 @@ function App() {
         <>
           {user ? (
             <div className='app'>
-              <Sidebar currentUserData={currentUserData} />
+              <Sidebar currentUserData={currentUserData} onLogout={handleLogout} />
               <Routes>
                 <Route index element={<Feed currentUserData={currentUserData} userData={userData} />} />
-                <Route path='/feed' element={<Feed currentUserData={currentUserData} userData={userData}/>} />
+                <Route path='/feed' element={<Feed currentUserData={currentUserData} userData={userData} />} />
                 <Route path='/explore' element={<Explore userData={userData} />} />
                 <Route path='/notifications/' element={<Notifications />} >
                   <Route path='/notifications/all' />
