@@ -10,13 +10,13 @@ export default function Page() {
     }
 
     return (
-        <div className="flex flex-col md:flex-row justify-around items-center max-w-[1400px] m-auto h-screen">
-            <figure className="w-[40%]">
+        <div className="flex flex-col md:flex-row justify-center md:justify-around items-center max-w-[1400px] m-auto h-screen">
+            <figure className="w-[40%] mb-12 md:mb-2">
                 <img src="/assets/logo.png" alt="Logo" />
             </figure>
             <div className="w-[80%] text-center md:w-[50%]">
-                <h1 className="text-7xl font-normal mb-6">Happening now!</h1>
-                <h2 className="text-4xl font-normal mb-4">Join today.</h2>
+                <h1 className="text-5xl md:text-7xl font-normal mb-6">Happening now!</h1>
+                <h2 className="text-2xl md:text-4xl font-normal mb-4">Join today.</h2>
                 {loginInterface ? (
                     <>
                         <form>
@@ -53,7 +53,7 @@ export default function Page() {
                                 Sign up
                             </button>
                         </form>
-                        <div className="flex justify-around items-center w-[90%] mt-4 m-auto">
+                        <div className="flex justify-around items-center w-[90%] mt-4 mb-2 m-auto">
                             <hr className="w-[40%]" />
                             <p>OR</p>
                             <hr className="w-[40%]" />
@@ -85,7 +85,7 @@ export default function Page() {
                                 Sign in
                             </button>
                         </form>
-                        <div className="flex justify-around items-center w-[90%] mt-4 m-auto">
+                        <div className="flex justify-around items-center w-[90%] mt-4 mb-2 m-auto">
                             <hr className="w-[40%]" />
                             <p>OR</p>
                             <hr className="w-[40%]" />
