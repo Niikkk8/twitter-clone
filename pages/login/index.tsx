@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { auth } from "@/firebase";
 import { useDispatch } from "react-redux";
@@ -13,21 +13,31 @@ interface SignUpData {
     signUpPassword: string;
 }
 
+interface LoginData {
+    loginEmail: string,
+    loginPassword: string
+}
+
 export default function SignUpForm() {
     const dispatch = useDispatch();
     const [loginInterface, setLoginInterface] = useState(false);
-    const [formData, setFormData] = useState<SignUpData>({
+    const [signUpFormData, setSignUpFormData] = useState<SignUpData>({
         signUpName: "",
         signUpUserName: "",
         signUpEmail: "",
         signUpPassword: "",
     });
 
+    const [loginFormData, setLoginFormData] = useState<LoginData>({
+        loginEmail: "",
+        loginPassword: ""
+    });
+
     const db = getFirestore();
 
     const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setFormData((prevData) => ({
+        setSignUpFormData((prevData) => ({
             ...prevData,
             [name]: value,
         }));
@@ -35,7 +45,7 @@ export default function SignUpForm() {
 
     const handleSignUpSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const { signUpName, signUpUserName, signUpEmail, signUpPassword } = formData;
+        const { signUpName, signUpUserName, signUpEmail, signUpPassword } = signUpFormData;
         try {
             const userCredentials = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
             await setDoc(doc(db, "users", userCredentials.user.uid), {
@@ -55,7 +65,7 @@ export default function SignUpForm() {
                 })
             );
             dispatch(setAuthenticationStatus({ isAuthenticated: true }));
-            setFormData({
+            setSignUpFormData({
                 signUpName: "",
                 signUpUserName: "",
                 signUpEmail: "",
@@ -86,6 +96,22 @@ export default function SignUpForm() {
         return () => unsubscribe();
     }, []);
 
+    const handleLoginChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setLoginFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }))
+    }
+
+
+    const handleLoginSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        console.log(loginFormData);
+        await signInWithEmailAndPassword(auth, loginFormData.loginEmail, loginFormData.loginPassword)
+    }
+
+
     const toggleLoginInterface = () => {
         setLoginInterface(!loginInterface);
     };
@@ -105,7 +131,7 @@ export default function SignUpForm() {
                                 <input
                                     type="text"
                                     name="signUpName"
-                                    value={formData.signUpName}
+                                    value={signUpFormData.signUpName}
                                     onChange={handleSignUpChange}
                                     placeholder="Your Name"
                                     className="w-[80%] border border-twitter-black p-2.5 m-1 rounded-lg focus:border-twitter-color outline-none"
@@ -114,7 +140,7 @@ export default function SignUpForm() {
                                 <input
                                     type="text"
                                     name="signUpUserName"
-                                    value={formData.signUpUserName}
+                                    value={signUpFormData.signUpUserName}
                                     onChange={handleSignUpChange}
                                     placeholder="Username"
                                     className="w-[80%] border border-twitter-black p-2.5 m-1 rounded-lg focus:border-twitter-color outline-none"
@@ -123,7 +149,7 @@ export default function SignUpForm() {
                                 <input
                                     type="email"
                                     name="signUpEmail"
-                                    value={formData.signUpEmail}
+                                    value={signUpFormData.signUpEmail}
                                     onChange={handleSignUpChange}
                                     placeholder="E-mail"
                                     className="w-[80%] border border-twitter-black p-2.5 m-1 rounded-lg focus:border-twitter-color outline-none"
@@ -132,7 +158,7 @@ export default function SignUpForm() {
                                 <input
                                     type="password"
                                     name="signUpPassword"
-                                    value={formData.signUpPassword}
+                                    value={signUpFormData.signUpPassword}
                                     onChange={handleSignUpChange}
                                     placeholder="Password"
                                     className="w-[80%] border border-twitter-black p-2.5 m-1 rounded-lg focus:border-twitter-color outline-none"
@@ -158,17 +184,25 @@ export default function SignUpForm() {
                     </>
                 ) : (
                     <>
-                        <form>
+                        <form onSubmit={handleLoginSubmit}>
                             <div>
                                 <input
                                     type="email"
+                                    value={loginFormData.loginEmail}
+                                    name="loginEmail"
+                                    onChange={handleLoginChange}
                                     className="w-[80%] border border-twitter-black p-2.5 m-1 rounded-lg focus:border-twitter-color outline-none"
                                     placeholder="E-mail"
+                                    required
                                 />
                                 <input
                                     type="password"
+                                    name="loginPassword"
+                                    value={loginFormData.loginPassword}
+                                    onChange={handleLoginChange}
                                     className="w-[80%] border border-twitter-black p-2.5 m-1 rounded-lg focus:border-twitter-color outline-none"
                                     placeholder="Password"
+                                    required
                                 />
                             </div>
                             <button

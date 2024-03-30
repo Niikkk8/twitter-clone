@@ -6,13 +6,27 @@ import {
     faBell,
     faEnvelope,
     faUser,
+    faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { signOutUser } from "@/redux/userSlice";
+import { signOut } from "firebase/auth";
+import { auth } from "@/firebase";
+
 
 export default function Sidebar() {
     const pathname = usePathname();
+    const dispatch = useDispatch()
+
+    const user = useSelector((state: any) => state.user)
+
+    async function handleSignOut() {
+        await signOut(auth)
+        dispatch(signOutUser())
+    }
     return (
         <div className="fixed bg-white bottom-0 sm:static sm:pt-8 sm:pl-6 w-full sm:border-r sm:h-screen sm:border-twitter-extra-light-gray sm:w-[20%] sm:min-w-fit sm:pr-2">
             <div className="hidden sm:flex mb-2 p-3">
@@ -28,7 +42,14 @@ export default function Sidebar() {
             <button className="hidden lg:inline text-center text-white ml-2 bg-twitter-color w-[220px] p-[12px] rounded-[40px] mt-2">
                 Tweet
             </button>
-            <div className="hidden sm:flex absolute bottom-4">user</div>
+            <div onClick={handleSignOut} className="hidden sm:flex absolute bottom-4 justify-between items-center p-4 space-x-4 px-4 hover:bg-twitter-extra-light-gray hover:bg-opacity-70 rounded-full cursor-pointer">
+                <img src="/assets/demo_profile-picture.jpg" className="w-12 h-12 rounded-full object-cover" alt="" />
+                <div className="hidden lg:block">
+                    <h2 className="font-bold whitespace-nowrap">{user.userName}</h2>
+                    <h3 className="color-twitter-gray">@{user.userID}</h3>
+                </div>
+                <FontAwesomeIcon icon={faEllipsis} className="hidden lg:block" />
+            </div>
         </div>
     );
 }
