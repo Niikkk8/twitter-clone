@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth"
-import { auth } from "@/firebase"
+import { createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
+import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
+import { auth } from "@/firebase";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/userSlice";
 import { setAuthenticationStatus } from "@/redux/authenticationSlice";
+
 interface SignUpData {
     signUpName: string;
     signUpUserName: string;
@@ -12,7 +14,7 @@ interface SignUpData {
 }
 
 export default function SignUpForm() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [loginInterface, setLoginInterface] = useState(false);
     const [formData, setFormData] = useState<SignUpData>({
         signUpName: "",
@@ -20,6 +22,8 @@ export default function SignUpForm() {
         signUpEmail: "",
         signUpPassword: "",
     });
+
+    const db = getFirestore();
 
     const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -31,37 +35,56 @@ export default function SignUpForm() {
 
     const handleSignUpSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        const userCredentials = await createUserWithEmailAndPassword(
-            auth, formData.signUpEmail, formData.signUpPassword
-        )
-        setFormData({
-            signUpName: "",
-            signUpUserName: "",
-            signUpEmail: "",
-            signUpPassword: "",
-        });
+        const { signUpName, signUpUserName, signUpEmail, signUpPassword } = formData;
+        try {
+            const userCredentials = await createUserWithEmailAndPassword(auth, signUpEmail, signUpPassword);
+            await setDoc(doc(db, "users", userCredentials.user.uid), {
+                userID: signUpUserName,
+                userName: signUpName,
+                userEmail: signUpEmail,
+                userPassword: signUpPassword,
+                userPhotoURL: null
+            });
+            dispatch(
+                setUser({
+                    userID: signUpUserName,
+                    userName: signUpName,
+                    userEmail: signUpEmail,
+                    userUID: userCredentials.user.uid,
+                    userPhotoURL: null,
+                })
+            );
+            dispatch(setAuthenticationStatus({ isAuthenticated: true }));
+            setFormData({
+                signUpName: "",
+                signUpUserName: "",
+                signUpEmail: "",
+                signUpPassword: "",
+            });
+        } catch (error) {
+            console.error("Error signing up:", error);
+        }
     };
 
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
-            if (!currentUser) return
-            const userID = currentUser.email?.split("@")[0] || '';
+        const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
+            if (!currentUser) return;
+            const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+            const userData = userDoc.data();
+            if (!userData) return;
             dispatch(
                 setUser({
-                    userID,
-                    userName: null,
-                    userEmail: currentUser.email || '',
+                    userID: userData.userID || "",
+                    userName: userData.userName || "",
+                    userEmail: userData.userEmail || "",
                     userUID: currentUser.uid,
-                    userPhotoURL: null
-                }),
-                setAuthenticationStatus({
-                    isAuthenticated: true
+                    userPhotoURL: null,
                 })
             );
+            dispatch(setAuthenticationStatus({ isAuthenticated: true }));
         });
         return () => unsubscribe();
     }, []);
-
 
     const toggleLoginInterface = () => {
         setLoginInterface(!loginInterface);

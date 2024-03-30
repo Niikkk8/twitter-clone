@@ -13,7 +13,6 @@ import { usePathname } from "next/navigation";
 
 export default function Sidebar() {
     const pathname = usePathname();
-    console.log(pathname)
     return (
         <div className="fixed bg-white bottom-0 sm:static sm:pt-8 sm:pl-6 w-full sm:border-r sm:h-screen sm:border-twitter-extra-light-gray sm:w-[20%] sm:min-w-fit sm:pr-2">
             <div className="hidden sm:flex mb-2 p-3">

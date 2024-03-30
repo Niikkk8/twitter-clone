@@ -14,6 +14,7 @@ export default function App({ Component, pageProps }: AppProps) {
     </Provider>
   );
 }
+
 interface WrapperComponentProps {
   Component: React.ElementType;
   pageProps: any;
@@ -21,7 +22,7 @@ interface WrapperComponentProps {
 
 function WrapperComponent({ Component, pageProps }: WrapperComponentProps) {
   const isLoggedIn: boolean = useSelector((state: any) => state.user.userUID) ? true : false;
-  const username = useSelector((state:any) => state.user.userID)
+  const username = useSelector((state: any) => state.user.userID)
   console.log(username)
   const router = useRouter();
 
