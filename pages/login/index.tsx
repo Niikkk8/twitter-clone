@@ -65,7 +65,9 @@ export default function SignUpForm() {
                     userName: signUpName,
                     userEmail: signUpEmail,
                     userUID: userCredentials.user.uid,
-                    userPhotoURL: null,
+                    userFollowers: [],
+                    userFollowing: [],
+                    userPosts: [],
                 })
             );
             setSignUpFormData({
@@ -91,7 +93,9 @@ export default function SignUpForm() {
                     userName: userData.userName || "",
                     userEmail: userData.userEmail || "",
                     userUID: currentUser.uid,
-                    userPhotoURL: null,
+                    userFollowers: userData.userFollowers,
+                    userFollowing: userData.userFollowing,
+                    userPosts: userData.userPosts
                 })
             );
         });

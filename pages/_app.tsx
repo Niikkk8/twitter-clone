@@ -26,8 +26,7 @@ function WrapperComponent({ Component, pageProps }: WrapperComponentProps) {
 
   useEffect(() => {
     if (isLoggedIn && router.pathname === '/login') {
-      router.push('/profile');
-      console.log("CHANGE THIS BACK TO HOME")
+      router.push('/');
     }
 
     if (!isLoggedIn && router.pathname !== '/login') {

@@ -5,7 +5,9 @@ const initialState = {
     userName: null,
     userEmail: null,
     userUID: null,
-    userPhotoURL: null
+    userFollowers: null,
+    userFollowing: null,
+    userPosts: null,
 }
 
 const userSlice = createSlice({
@@ -17,14 +19,18 @@ const userSlice = createSlice({
             state.userName = action.payload.userName
             state.userEmail = action.payload.userEmail
             state.userUID = action.payload.userUID
-            state.userPhotoURL = action.payload.userPhotoURL
+            state.userFollowers = action.payload.userFollowers
+            state.userFollowing = action.payload.userFollowing
+            state.userPosts = action.payload.userPosts
         },
         signOutUser: (state) => {
             state.userID = null,
                 state.userName = null,
                 state.userEmail = null,
                 state.userUID = null,
-                state.userPhotoURL = null
+                state.userFollowers = null
+                state.userFollowing = null
+                state.userPosts = null
         }
     }
 });

@@ -7,7 +7,6 @@ import { useSelector } from "react-redux";
 
 export default function page() {
   const user = useSelector((state: any) => state.user);
-  console.log(user);
   return (
     <div className="w-[100%] md:w-[60%] md:border-r md:border-twitter-extra-light-gray overflow-y-scroll h-screen no-scrollbar pb-20 md:pb-0">
       <div className="px-3 py-1 border-b border-twitter-extra-light-gray sticky top-0 z-50 bg-twitter-white flex items-center">
@@ -42,8 +41,8 @@ export default function page() {
         <div className="font-regular text-md opacity-70">@{user.userID}</div>
       </div>
       <div className="flex text-sm mx-6 my-4 space-x-2">
-        <div>123 followers</div>
-        <div>123 following</div>
+        <div>{user.userFollowers?.length} followers</div>
+        <div>{user.userFollowing?.length} following</div>
       </div>
       <div
         className="text-xl font-semibold text-center border-b border-twitter-extra-light-gray pb-4 relative 
