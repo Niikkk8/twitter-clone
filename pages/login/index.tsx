@@ -4,7 +4,6 @@ import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { auth } from "@/firebase";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/userSlice";
-import { setAuthenticationStatus } from "@/redux/authenticationSlice";
 
 interface SignUpData {
     signUpName: string;
@@ -69,7 +68,6 @@ export default function SignUpForm() {
                     userPhotoURL: null,
                 })
             );
-            dispatch(setAuthenticationStatus({ isAuthenticated: true }));
             setSignUpFormData({
                 signUpName: "",
                 signUpUserName: "",
@@ -96,7 +94,6 @@ export default function SignUpForm() {
                     userPhotoURL: null,
                 })
             );
-            dispatch(setAuthenticationStatus({ isAuthenticated: true }));
         });
         return () => unsubscribe();
     }, []);

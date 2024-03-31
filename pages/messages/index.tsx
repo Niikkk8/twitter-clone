@@ -4,7 +4,7 @@ export default function page() {
   return (
     <div className='w-[100%] md:w-[60%] md:border-r md:border-twitter-extra-light-gray overflow-y-scroll h-screen no-scrollbar pb-20 md:pb-0'>
       <div className='px-3 py-3 text-lg  sm:text-l font-bold border-b border-twitter-extra-light-gray sticky top-0 z-50 bg-twitter-white'>MESSAGES</div>
-      <h2 className="text-center my-6 text-xl text-semibold">This is the messages page, the messaging functionality hasn't been added yet.</h2>
+      <h2 className="text-center my-6 text-xl text-semibold px-6">This is the messages page, the messaging functionality hasn't been added yet.</h2>
     </div>
   )
 }

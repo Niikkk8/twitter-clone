@@ -22,13 +22,12 @@ interface WrapperComponentProps {
 
 function WrapperComponent({ Component, pageProps }: WrapperComponentProps) {
   const isLoggedIn: boolean = useSelector((state: any) => state.user.userUID) ? true : false;
-  const username = useSelector((state: any) => state.user.userID)
-  console.log(username)
   const router = useRouter();
 
   useEffect(() => {
     if (isLoggedIn && router.pathname === '/login') {
-      router.push('/');
+      router.push('/profile');
+      console.log("CHANGE THIS BACK TO HOME")
     }
 
     if (!isLoggedIn && router.pathname !== '/login') {
