@@ -45,7 +45,7 @@ export default function Sidebar() {
             <div onClick={handleSignOut} className="hidden sm:flex absolute bottom-4 justify-between items-center p-4 space-x-4 px-4 hover:bg-twitter-extra-light-gray hover:bg-opacity-70 rounded-full cursor-pointer">
                 <img src="/assets/demo_profile-picture.jpg" className="w-12 h-12 rounded-full object-cover" alt="" />
                 <div className="hidden lg:block">
-                    <h2 className="font-bold whitespace-nowrap">{user.userName}</h2>
+                    <h2 className="font-bold text-lg whitespace-nowrap">{user.userName}</h2>
                     <h3 className="color-twitter-gray">@{user.userID}</h3>
                 </div>
                 <FontAwesomeIcon icon={faEllipsis} className="hidden lg:block" />

@@ -37,11 +37,16 @@ export default function SignUpForm() {
 
     const handleSignUpChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
+        let transformedValue = value;
+        if (name === 'signUpUserName') {
+            transformedValue = value.trim().toLowerCase().replace(/\s/g, '');
+        }
         setSignUpFormData((prevData) => ({
             ...prevData,
-            [name]: value,
+            [name]: transformedValue,
         }));
     };
+
 
     const handleSignUpSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
