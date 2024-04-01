@@ -18,7 +18,7 @@ export default function page() {
         </Link>
         <div className="ml-2">
           <div className="font-bold text-lg">{user.userName}</div>
-          <div className="text-twitter-dark-gray text-sm"> {21} posts</div>
+          <div className="text-twitter-dark-gray text-sm"> {user.userPosts?.length} posts</div>
         </div>
       </div>
       <img
@@ -45,7 +45,7 @@ export default function page() {
         <div>{user.userFollowing?.length} following</div>
       </div>
       <div
-        className="text-xl font-semibold text-center border-b border-twitter-extra-light-gray pb-4 relative 
+        className="text-xl font-semibold text-center border-b border-twitter-extra-light-gray pb-2 relative 
           after:content-'' after:w-[25%] after:absolute after:bg-twitter-color after:rounded-full after:h-[2px] after:bottom-0 after:left-[50%] after:translate-x-[-50%]">
         Posts
       </div>
