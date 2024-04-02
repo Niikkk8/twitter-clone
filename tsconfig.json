@@ -19,6 +19,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "redux/userSlice.js", "pages/_app.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", "redux/userSlice.js", "pages/_app.tsx", "pages/profile/[profileID].tsx"],
   "exclude": ["node_modules"]
 }

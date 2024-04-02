@@ -20,7 +20,6 @@ import { auth } from "@/firebase";
 export default function Sidebar() {
     const pathname = usePathname();
     const dispatch = useDispatch()
-
     const user = useSelector((state: any) => state.user)
 
     async function handleSignOut() {
@@ -37,7 +36,7 @@ export default function Sidebar() {
                 <SidebarLink link="/explore" text="Explore" iconName="magnifyingGlass" active={pathname.includes('/explore')} />
                 <SidebarLink link="/messages" text="Messages" iconName="envelope" active={pathname.endsWith('/messages')} />
                 <SidebarLink link="/notifications" text="Notifications" iconName="bell" active={pathname.includes('/notifications')} />
-                <SidebarLink link="/profile" text="Profile" iconName="user" active={pathname.endsWith('/profile')} />
+                <SidebarLink link={`/profile/${user.userID}`} text="Profile" iconName="user" active={pathname.endsWith(`/profile/${user.userID}`)} />
             </nav>
             <button className="hidden lg:inline text-center text-white ml-2 bg-twitter-color w-[220px] p-[12px] rounded-[40px] mt-2">
                 Tweet

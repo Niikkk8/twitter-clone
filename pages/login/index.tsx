@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { browserSessionPersistence, createUserWithEmailAndPassword, onAuthStateChanged, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
 import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { auth } from "@/firebase";
 import { useDispatch } from "react-redux";
 import { setUser } from "@/redux/userSlice";
+import { useRouter } from "next/router";
 
 interface SignUpData {
     signUpName: string;
@@ -18,6 +19,7 @@ interface LoginData {
 }
 
 export default function SignUpForm() {
+    const router = useRouter()
     const dispatch = useDispatch();
     const [loginInterface, setLoginInterface] = useState(false);
     const [signUpFormData, setSignUpFormData] = useState<SignUpData>({
@@ -57,7 +59,10 @@ export default function SignUpForm() {
                 userName: signUpName,
                 userEmail: signUpEmail,
                 userPassword: signUpPassword,
-                userPhotoURL: null
+                userPhotoURL: null,
+                userFollowers: [],
+                userFollowing: [],
+                userPosts: []
             });
             dispatch(
                 setUser({
@@ -110,11 +115,29 @@ export default function SignUpForm() {
         }))
     }
 
-
     const handleLoginSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        console.log(loginFormData);
-        await signInWithEmailAndPassword(auth, loginFormData.loginEmail, loginFormData.loginPassword)
+        try {
+            const userCredential = await signInWithEmailAndPassword(auth, loginFormData.loginEmail, loginFormData.loginPassword);
+            const userDoc = await getDoc(doc(db, "users", userCredential.user.uid));
+            const userData = userDoc.data();
+            if (userData) {
+                dispatch(
+                    setUser({
+                        userID: userData.userID || "",
+                        userName: userData.userName || "",
+                        userEmail: userData.userEmail || "",
+                        userUID: userCredential.user.uid    ,
+                        userFollowers: userData.userFollowers || [],
+                        userFollowing: userData.userFollowing || [],
+                        userPosts: userData.userPosts || [],
+                    })
+                );
+            }
+            router.push("/")
+        } catch (error: any) {
+            console.error("Error signing in:", error.message);
+        }
     }
 
 

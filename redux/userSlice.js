@@ -29,8 +29,8 @@ const userSlice = createSlice({
                 state.userEmail = null,
                 state.userUID = null,
                 state.userFollowers = null
-                state.userFollowing = null
-                state.userPosts = null
+            state.userFollowing = null
+            state.userPosts = null
         }
     }
 });

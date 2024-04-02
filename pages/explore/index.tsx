@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useEffect, useState } from "react";
 import { getFirestore, collection, getDocs } from "firebase/firestore";
 import { db } from "@/firebase";
+import Link from "next/link";
 
 export default function Page() {
   const [searchInput, setSearchInput] = useState<string>("");
@@ -67,6 +68,7 @@ export default function Page() {
       <>
         {
           filteredUsers.map(user =>
+            <Link href={`/profile/${user.userID}`}>
             <div className="bg-twitter-extra-light-gray bg-opacity-50 flex items-center px-4 py-3 m-2 rounded-full">
               <img src="/assets/demo_profile-picture.jpg" alt="" className="w-[72px] rounded-full mr-4" />
               <div className="">
@@ -74,6 +76,7 @@ export default function Page() {
                 <span className="opacity-70 text-sm">@{user.userID}</span>
               </div>
             </div>
+            </Link>
           )
         }
       </>
