@@ -68,14 +68,14 @@ export default function Page() {
       <>
         {
           filteredUsers.map(user =>
-            <Link href={`/profile/${user.userID}`}>
-            <div className="bg-twitter-extra-light-gray bg-opacity-50 flex items-center px-4 py-3 m-2 rounded-full">
-              <img src="/assets/demo_profile-picture.jpg" alt="" className="w-[72px] rounded-full mr-4" />
-              <div className="">
-                <h4 className="font-semibold">{user.userName}</h4>
-                <span className="opacity-70 text-sm">@{user.userID}</span>
+            <Link href={`/profile/${user.userID}`} key={user.userID}>
+              <div className="bg-twitter-extra-light-gray bg-opacity-50 flex items-center px-4 py-3 m-2 rounded-full">
+                <img src="/assets/demo_profile-picture.jpg" alt="" className="w-[72px] rounded-full mr-4" />
+                <div className="">
+                  <h4 className="font-semibold">{user.userName}</h4>
+                  <span className="opacity-70 text-sm">@{user.userID}</span>
+                </div>
               </div>
-            </div>
             </Link>
           )
         }
