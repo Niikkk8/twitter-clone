@@ -17,7 +17,6 @@ export default function TweetBox() {
 
     const handleTweetSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-
         try {
             const docRef = await addDoc(collection(db, "posts"), {
                 postUserUID: user.userUID,
