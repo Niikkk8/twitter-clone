@@ -19,9 +19,9 @@ interface UserData {
 }
 
 export default function ProfilePage() {
-  const user = useSelector((state: any) => state.user);
   const router = useRouter();
   const { userId } = router.query;
+  const user = useSelector((state: any) => state.user);
   const [displayUserData, setDisplayUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [isFollowing, setIsFollowing] = useState<boolean>(false);

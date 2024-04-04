@@ -1,28 +1,45 @@
 import { db } from '@/firebase';
+import { setUser } from '@/redux/userSlice';
 import { faCalendar, faChartSimple, faFaceSmile, faImage, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { addDoc, collection, serverTimestamp } from 'firebase/firestore';
+import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
 import React, { useState, ChangeEvent } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 export default function TweetBox() {
     const user = useSelector((state: any) => state.user)
     const [tweetInput, setTweetInput] = useState<string>('');
+    const dispatch = useDispatch();
 
     const handleInputChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setTweetInput(event.target.value);
     };
 
     const handleTweetSubmit = async (e: React.FormEvent) => {
-        // const docRref = await addDoc(collection(db, "posts"), {
-        //     postUserID: user.userID,
-        //     postUserName: user.userName,
-        //     postUserUID: user.userUID,
-        //     postTimeStamp: serverTimestamp(),
-        //     postLikes: [],
-        //     postText: tweetInput
-        // })
-        setTweetInput("")
+        e.preventDefault();
+
+        try {
+            const docRef = await addDoc(collection(db, "posts"), {
+                postUserUID: user.userUID,
+                postUserID: user.userID,
+                postUserName: user.userName,
+                postTimeStamp: serverTimestamp(),
+                postLikes: [],
+                postText: tweetInput
+            });
+            const postId = docRef.id;
+            await updateDoc(doc(db, 'users', user.userUID), {
+                userPosts: arrayUnion(postId)
+            });
+            dispatch(
+                setUser({
+                    userPosts: [...user.userPosts, postId]
+                })
+            );
+            setTweetInput("");
+        } catch (error) {
+            console.error("Error adding tweet:", error);
+        }
     };
 
     return (

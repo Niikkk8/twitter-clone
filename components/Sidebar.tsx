@@ -27,7 +27,7 @@ export default function Sidebar() {
         dispatch(signOutUser())
     }
     return (
-        <div className="fixed bg-white bottom-0 sm:static sm:pt-8 sm:pl-6 w-full sm:border-r sm:h-screen sm:border-twitter-extra-light-gray sm:w-[20%] sm:min-w-fit sm:pr-2">
+        <div className="fixed bg-white bottom-0 sm:static sm:pt-8 sm:pl-6 w-full sm:border-r sm:h-screen sm:border-twitter-extra-light-gray sm:w-[20%] sm:min-w-fit sm:pr-2 z-10">
             <div className="hidden sm:flex mb-2 p-3">
                 <Image src="/assets/logo.png" alt="Logo" width={48} height={48} className="m-auto lg:ml-2" />
             </div>
