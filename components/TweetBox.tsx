@@ -3,7 +3,7 @@ import { setUser } from '@/redux/userSlice';
 import { faCalendar, faChartSimple, faFaceSmile, faImage, faLocationDot } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { addDoc, arrayUnion, collection, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
-import React, { useState, ChangeEvent } from 'react';
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 export default function TweetBox() {
@@ -15,7 +15,7 @@ export default function TweetBox() {
         setTweetInput(event.target.value);
     };
 
-    const handleTweetSubmit = async (e: React.FormEvent) => {
+    const handleTweetSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
             const docRef = await addDoc(collection(db, "posts"), {
@@ -48,7 +48,7 @@ export default function TweetBox() {
                 className='w-14 h-14 rounded-full object-cover'
                 alt=''
             />
-            <div className='w-full'>
+            <form className='w-full' onSubmit={handleTweetSubmit}>
                 <textarea
                     className='bg-transparent resize-none outline-none w-full min-h-[48px] text-lg p-2'
                     placeholder="What's on your mind?"
@@ -81,14 +81,14 @@ export default function TweetBox() {
                         />
                     </div>
                     <button
+                        type="submit"
                         className='bg-twitter-color text-white rounded-full px-8 py-2 mt-2 sm:mt-0 disabled:opacity-50 cursor-pointer'
-                        onClick={handleTweetSubmit}
                         disabled={!tweetInput}
                     >
                         Tweet
                     </button>
                 </div>
-            </div>
+            </form>
         </div>
     );
 }
