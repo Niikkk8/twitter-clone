@@ -100,6 +100,9 @@ const PostHeader: React.FC<PostProps> = ({ post }) => {
 
     async function deleteTweet(){
         await deleteDoc(doc(db, "posts", post.id))
+        await updateDoc(doc(db, "users", user.userUID), {
+            userPosts: arrayRemove(post.id)
+        })
     }
 
     return (
