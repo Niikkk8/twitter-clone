@@ -6,28 +6,31 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faFaceSmile, faImage } from '@fortawesome/free-regular-svg-icons';
 import { faChartSimple, faLocationDot, faXmark } from '@fortawesome/free-solid-svg-icons';
 import { db } from '@/firebase';
-import { arrayUnion, doc, updateDoc } from 'firebase/firestore';
+import { arrayUnion, doc, serverTimestamp, updateDoc } from 'firebase/firestore';
+import { useRouter } from 'next/router';
 
 export default function CommentModal() {
+    const router = useRouter()
+    const dispatch = useDispatch();
     const isOpen = useSelector((state: any) => state.modalSlice.commentModalOpen || false);
     const tweetDetails = useSelector((state: any) => state.modalSlice.commentTweetDetails);
     const user = useSelector((state: any) => state.user);
     const [comment, setComment] = useState('');
-    const dispatch = useDispatch();
-    console.log(tweetDetails)
 
     async function sendComment(event: React.FormEvent<HTMLFormElement>) {
         event.preventDefault();
         const docRef = doc(db, "posts", tweetDetails.commentId);
         const commentDetails = {
             commentUserID: user.userID,
-            commentUsername: user.userName,
+            commentUserName: user.userName,
             commentText: comment
         }
         await updateDoc(docRef, {
             postComments: arrayUnion(commentDetails)
         })
         setComment('');
+        router.push(`/posts/${tweetDetails.commentId}`)
+        dispatch(closeCommentModal());
     }
 
     return (

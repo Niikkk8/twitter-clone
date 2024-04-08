@@ -2,6 +2,8 @@ import { openCommentModal, setCommentTweet } from '@/redux/modalSlice';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faArrowUpFromBracket, faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import React from 'react';
 import Moment from 'react-moment';
 import { useDispatch } from 'react-redux';
@@ -18,12 +20,14 @@ interface PostProps {
 }
 
 const Post: React.FC<PostProps> = ({ post }) => {
+    const router = useRouter();
     const dispatch = useDispatch()
     return (
-        <div className='border-b border-twitter-extra-light-gray'>
+        <div className='border-b border-twitter-extra-light-gray cursor-pointer' onClick={() => router.push(`/posts/${post.id}`)}>
             <PostHeader post={post} />
             <div className='text-lg p-3 ml-20 mr-4 sm:mr-20 text-twitter-dark-gray flex justify-between'>
-                <div onClick={() => {
+                <div onClick={(event) => {
+                    event.stopPropagation()
                     dispatch(setCommentTweet({
                         commentId: post.id,
                         commentTweet: post.postText,
