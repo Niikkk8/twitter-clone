@@ -1,4 +1,4 @@
-import { openCommentModal } from '@/redux/modalSlice';
+import { openCommentModal, setCommentTweet } from '@/redux/modalSlice';
 import { faComment, faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faArrowUpFromBracket, faChartSimple } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 interface PostProps {
     post: {
         id: string;
+        postUserUID: string,
         postUserName: string;
         postUserID: string;
         postText: string;
@@ -22,7 +23,16 @@ const Post: React.FC<PostProps> = ({ post }) => {
         <div className='border-b border-twitter-extra-light-gray'>
             <PostHeader post={post} />
             <div className='text-lg p-3 ml-20 mr-4 sm:mr-20 text-twitter-dark-gray flex justify-between'>
-                <div onClick={() => dispatch(openCommentModal())}>
+                <div onClick={() => {
+                    dispatch(setCommentTweet({
+                        commentId: post.id,
+                        commentTweet: post.postText,
+                        commentUserUID: post.postUserUID,
+                        commentUserName: post.postUserName,
+                        commentUserID: post.postUserID,
+                    }));
+                    dispatch(openCommentModal())
+                }}>
                     <FontAwesomeIcon icon={faComment} className='cursor-pointer hover:text-blue-500 hover:bg-blue-200 p-2 rounded-full' />
                 </div>
                 <FontAwesomeIcon icon={faHeart} className='cursor-pointer hover:text-red-500 hover:bg-red-200 p-2 rounded-full' />

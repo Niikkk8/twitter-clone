@@ -48,6 +48,7 @@ export default function ProfilePage() {
 
         fetchUserData();
     }, [userId]);
+
     useEffect(() => {
         const fetchUserPosts = async () => {
             if (displayUserData) {
@@ -55,6 +56,7 @@ export default function ProfilePage() {
                     const postDocs = displayUserData.userPosts.map((postId: string) => doc(db, "posts", postId));
                     const postSnapshots = await Promise.all(postDocs.map(getDoc));
                     const userPosts = postSnapshots.map((snapshot: any) => ({ id: snapshot.id, ...snapshot.data() }));
+                    userPosts.sort((a, b) => b.postTimeStamp.seconds - a.postTimeStamp.seconds);
                     setDisplayUserPosts(userPosts);
                 } catch (error) {
                     console.error("Error fetching user posts:", error);
@@ -63,6 +65,7 @@ export default function ProfilePage() {
         };
         fetchUserPosts();
     }, [displayUserData]);
+
     const handleFollow = async () => {
         await updateDoc(doc(db, 'users', displayUserID), {
             userFollowers: arrayUnion(user.userUID)
